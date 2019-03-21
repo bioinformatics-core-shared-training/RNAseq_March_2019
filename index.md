@@ -31,7 +31,7 @@ here for you.
 * Stephane Ballereau - Bioinformatics Core, Cancer Research UK Cambridge Institute
 * Dominique-Laurent Couturier - Bioinformatics Core, Cancer Research UK Cambridge Institute 
 * Abbi Edwards - Bioinformatics Core, Cancer Research UK Cambridge Institute
-* Yasin Memari - [[ **AFFILIATION NEEDED** ]]
+* Yasin Memari - Medical Genetics and MRC Cancer Unit, University of Cambridge
 * Guillermo Parada Gonzalez - [[ **AFFILIATION NEEDED** ]]
 * Ashley D Sawle - Bioinformatics Core, Cancer Research UK Cambridge Institute
 
