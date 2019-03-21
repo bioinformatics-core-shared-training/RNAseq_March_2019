@@ -17,12 +17,12 @@ There is a [course Etherpad](https://etherpad.wikimedia.org/p/RNAseq_UoC_March20
 
 ## Instructors
 
-* Ashley D Sawle - Bioinformatics Core, Cancer Research UK Cambridge Institute
-* Abbi Edwards - Bioinformatics Core, Cancer Research UK Cambridge Institute
 * Stephane Ballereau - Bioinformatics Core, Cancer Research UK Cambridge Institute
 * Dominique-Laurent Couturier - Bioinformatics Core, Cancer Research UK Cambridge Institute 
-* Guillermo Parada Gonzalez - [[ **AFFILIATION NEEDED** ]]
+* Abbi Edwards - Bioinformatics Core, Cancer Research UK Cambridge Institute
 * Yasin Memari - [[ **AFFILIATION NEEDED** ]]
+* Guillermo Parada Gonzalez - [[ **AFFILIATION NEEDED** ]]
+* Ashley D Sawle - Bioinformatics Core, Cancer Research UK Cambridge Institute
 
 ## Timetable
 
