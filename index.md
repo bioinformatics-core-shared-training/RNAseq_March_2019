@@ -15,6 +15,15 @@ This workshop is aimed at biologists interested in learning how to perform diffe
 
 There is a [course Etherpad](https://etherpad.wikimedia.org/p/RNAseq_UoC_March2019). Please post questions here and we will answer them as soon as we can (Or if you can answer someone elses question do so!). The trainers may also post useful code snippets here for you.
 
+## Instructors
+
+* Ashley D Sawle - Bioinformatics Core, Cancer Research UK Cambridge Institute
+* Abbi Edwards - Bioinformatics Core, Cancer Research UK Cambridge Institute
+* Stephane Ballereau - Bioinformatics Core, Cancer Research UK Cambridge Institute
+* Dominique-Laurent Couturier - Bioinformatics Core, Cancer Research UK Cambridge Institute 
+* Guillermo Parada Gonzalez - [[ **AFFILIATION NEEDED** ]]
+* Yasin Memari - [[ **AFFILIATION NEEDED** ]]
+
 ## Timetable
 
 _Day 1_
