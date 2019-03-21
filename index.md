@@ -7,13 +7,24 @@
 
 ## Outline
 
-In this workshop, you will be learning how to analyse RNA-seq count data, using R. This will include reading the data into R, quality control and performing differential expression analysis and gene set testing, with a focus on the DESeq2 analysis workflow. You will learn how to generate common plots for analysis and visualisation of gene expression data, such as boxplots and heatmaps. 
+In this workshop, you will be learning how to analyse RNA-seq data.  This will
+include read alignment, quality control, de-novo transcriptome assembly,
+quantification against a reference, reading the count data into R, performing
+differential expression analysis, and gene set testing, with a focus on the
+DESeq2 analysis workflow. You will learn how to generate common plots for
+analysis and visualisation of gene expression data, such as boxplots and
+heatmaps. 
 
-This workshop is aimed at biologists interested in learning how to perform differential expression analysis of RNA-seq data when reference genomes are available. 
+This workshop is aimed at biologists interested in learning how to perform
+differential expression analysis of RNA-seq data. 
 
 ## Etherpad
 
-There is a [course Etherpad](https://etherpad.wikimedia.org/p/RNAseq_UoC_March2019). Please post questions here and we will answer them as soon as we can (Or if you can answer someone elses question do so!). The trainers may also post useful code snippets here for you.
+There is a [course
+Etherpad](https://etherpad.wikimedia.org/p/RNAseq_UoC_March2019). Please post
+questions here and we will answer them as soon as we can (or if you can answer
+someone elses question do so!). The trainers may also post useful code snippets
+here for you.
 
 ## Instructors
 
