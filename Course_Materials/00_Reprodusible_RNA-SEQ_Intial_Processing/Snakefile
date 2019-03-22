@@ -2,7 +2,7 @@ include: "rules/download_data.skm"
 
 rule all:
     input:
-        expand("featureCounts/{sample}.gene_count.txt", sample=SAMPLES)
+        "featureCounts/total_samples.gene_count.txt"
  
 rule whippet:
     input:
@@ -51,9 +51,9 @@ rule samTobam:
 rule featureCounts:
     input:
         gtf = "Gene_annotation/dm6.Ensembl.genes.gtf",
-        bam = "hisat2/{sample}.sorted.bam"
+        bam = expand("hisat2/{sample}.sorted.bam", sample=SAMPLES)
     output:
-        "featureCounts/{sample}.gene_count.txt"
+        "featureCounts/total_samples.gene_count.txt"
     threads: 1
     conda:
         "envs/core.yaml"
