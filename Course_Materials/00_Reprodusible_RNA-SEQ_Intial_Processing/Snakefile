@@ -19,7 +19,15 @@ rule all:
         expand("Whippet/Quant/{sample}.psi.gz", sample=SAMPLES)
 
 
-
+rule download_fastq:
+    input:
+        "download/{sample}.download.sh"
+    output:
+        temp("FASTQ/{sample}.fastq")
+    conda:
+        "../envs/core.yaml"
+    shell:
+        "bash {input}"
 
 
 
