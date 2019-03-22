@@ -1,0 +1,5 @@
+The flag 'temp' used in rule samTobam is only valid for outputs, not inputs.
+Building DAG of jobs...
+MissingInputException in line 120 of /lustre/scratch117/cellgen/team218/gp7/Course/RNAseq_March_2019/Course_Materials/00_Reprodusible_RNA-SEQ_Intial_Processing/Snakefile:
+Missing input files for rule gene_count:
+Gene_annotation/dm6.Ensembl.genes.gtf
