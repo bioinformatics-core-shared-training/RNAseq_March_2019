@@ -79,8 +79,8 @@ rule download_genome:
         "download/genome.download.sh"
     output:
         "Genome/dm6.fa"
-    conda:
-        "../envs/download.yaml"
+#    conda:
+#        "../envs/download.yaml"
     shell:
         "bash {input}"
     
@@ -89,8 +89,8 @@ rule download_sample:
         "download/{sample}.download.sh"
     output:
         "FASTQ/{sample}.fastq.gz"
-    conda:
-        "../envs/download.yaml"
+#    conda:
+#        "../envs/download.yaml"
     shell:
         "bash {input}"
 
