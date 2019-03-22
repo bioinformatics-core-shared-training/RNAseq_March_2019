@@ -20,17 +20,10 @@
     },
 
 
-    "hisat2_to_Genome_A" :
+    "hisat2_to_Genome" :
     {
         "nCPUs"     : 5
-    },
-
-
-    "hisat2_to_Genome_B" :
-    {
-        "nCPUs"     : 5
-    },
-
+    }
 
 
 }
