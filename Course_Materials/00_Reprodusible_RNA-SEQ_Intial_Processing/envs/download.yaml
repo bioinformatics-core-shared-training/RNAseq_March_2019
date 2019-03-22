@@ -3,7 +3,6 @@ channels:
   - conda-forge
   - bioconda
   - defaults
-  - cgat
 dependencies:
   - sra-tools=2.9.1_1
   - wget
