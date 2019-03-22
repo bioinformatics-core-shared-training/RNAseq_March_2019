@@ -6,7 +6,8 @@ rule all:
         expand("featureCounts/{sample}.gene_count.txt", sample=SAMPLES)
  
 rule whippet:
-    expand("Whippet/Quant/{sample}.psi.gz", sample=SAMPLES)
+    input:
+        expand("Whippet/Quant/{sample}.psi.gz", sample=SAMPLES)
         
         
 rule download_genome:
