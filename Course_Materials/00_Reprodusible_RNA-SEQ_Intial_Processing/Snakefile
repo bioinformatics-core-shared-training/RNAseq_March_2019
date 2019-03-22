@@ -16,7 +16,7 @@ rule download_genome:
     output:
         "Genome/dm6.fa"
     conda:
-        "../envs/download.yaml"
+        "envs/download.yaml"
     shell:
         "bash {input}"
     
@@ -26,7 +26,7 @@ rule download_sample:
     output:
         "FASTQ/{sample}.fastq.gz"
     conda:
-        "../envs/download.yaml"
+        "envs/download.yaml"
     shell:
         "bash {input}"
 
