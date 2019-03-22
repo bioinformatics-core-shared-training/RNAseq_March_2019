@@ -1,4 +1,0 @@
-The flag 'temp' used in rule samTobam is only valid for outputs, not inputs.
-Building DAG of jobs...
-WorkflowError:
-Conda env file does not exist: /lustre/scratch117/cellgen/team218/gp7/Course/RNAseq_March_2019/Course_Materials/00_Reprodusible_RNA-SEQ_Intial_Processing/../envs/download.yaml
