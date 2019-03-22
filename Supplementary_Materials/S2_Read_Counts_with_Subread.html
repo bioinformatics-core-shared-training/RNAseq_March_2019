@@ -97,6 +97,9 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
@@ -104,14 +107,74 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -124,7 +187,7 @@ $(document).ready(function () {
 <h1 class="title toc-ignore">RNA-seq analysis in R</h1>
 <h3 class="subtitle"><em>Counting</em></h3>
 <h4 class="author"><em>Stephane Ballereau, Mark Dunning, Abbi Edwards, Oscar Rueda, Ashley Sawle</em></h4>
-<h4 class="date"><em>Last modified: 20 Jul 2018</em></h4>
+<h4 class="date"><em>Last modified: 22 Mar 2019</em></h4>
 
 </div>
 
@@ -137,17 +200,19 @@ $(document).ready(function () {
 
 <div id="introduction-and-data-import" class="section level2">
 <h2>Introduction and data import</h2>
-<p>The raw reads, in fastq files, have been aligned using HISAT2. The alignment process produces a set of BAM files, where each file contains the read alignments for each library. The BAM files containing the aligned reads can be found in the <strong><code>data</code></strong> directory under the <strong><code>CourseMaterials</code></strong></p>
+<p>The raw reads, in fastq files, have been aligned using HISAT2. The alignment process produces a set of BAM files, where each file contains the read alignments for each library. The BAM files containing the aligned reads can be found in the <strong><code>counts/small_bams</code></strong> directory under the <strong><code>SupplementaryMaterials</code></strong></p>
 </div>
 <div id="counting" class="section level2">
 <h2>Counting</h2>
 <p>Once our reads have been aligned against the genome, we need to summarise the information across genes or exons. In the BAM file, there is a chromosomal location for every read that mapped uniquely. We can determine if the region each read is aligned to corresponds to a particular gene or exon and then summarise across the entire BAM file to get total read counts for each gene or exon.</p>
 <p>We will use <strong><code>featureCounts</code></strong> <span class="citation">(Liao, Smyth, and Shi 2014)</span> programme from the <a href="http://subread.sourceforge.net/">subRead package</a> to do the counting. In addition to the BAM files, we also need to provide <strong><code>featureCounts</code></strong> with an annotation file. Usually this will be a GTF/GFF file corresponding to the genome assembly used (a description of the GTF format can be found at <a href="http://genome.ucsc.edu/FAQ/FAQformat.html#format4">UCSC website</a>). <strong><code>featureCounts</code></strong> can also use a simpler annotation format called SAF, this is particularly useful for defining custom/novel features that you wish to count against.</p>
-<p>GTF/GFF files define genomic regions covered by different types of genomic features, e.g. genes, transcripts, exons, or UTRs. The necessary GTF is already in the directory <code>Course_Materials/data</code>. Instruction on where and how to download the GTF can be found in the <a href="../Supplementary_Materials/S1_Getting_raw_reads_from_SRA.html">Supplementary Materials</a>.</p>
+<p>GTF/GFF files define genomic regions covered by different types of genomic features, e.g. genes, transcripts, exons, or UTRs. The necessary GTF is already in the directory <code>Course_Materials/data</code>. Instruction on where and how to download the GTF can be found in the <a href="S1_Getting_raw_reads_from_SRA.html">Supplementary Materials</a>.</p>
 <p>When using a GTF/GFF file we need to tell <strong><code>featureCounts</code></strong> what feature type to use to count reads, and what attribute type to summarise the results at. For RNAseq we most commonly wish to count reads aligning to exons, and then to summarise at the gene level.</p>
 <p>Lets have a quick look at the top of a GTF file so we can see what data it contains and what <strong>feature type</strong> and <strong>attribute type</strong> mean:</p>
-<pre><code>cd ~/CourseMaterials/data/counts
-  
+<pre><code>cd ~/RNAseq_March_2019/SupplementaryMaterials/counts
+
+gunzip Mus_musculus.GRCm38.80.gtf.gz  
+
 head Mus_musculus.GRCm38.80.gtf</code></pre>
 <p>The code below uses <strong><code>featureCounts</code></strong> to count reads in a BAM file against a GTF for the mouse GRCm38 genome assembly.</p>
 <pre><code>  featureCounts \
@@ -156,7 +221,7 @@ head Mus_musculus.GRCm38.80.gtf</code></pre>
       --primary \
       -a Mus_musculus.GRCm38.80.gtf \
       -o MCL1_DJ.featureCounts \
-      MCL1_DJ.bam</code></pre>
+      small_bams/MCL1_DJ.bam</code></pre>
 <ul>
 <li><strong><code>-t exon</code></strong> - the <strong>feature</strong> type to count reads against, in this case exons</li>
 <li><strong><code>-g gene_id</code></strong> - the <strong>attribute</strong> type to summarise counts by, in this case the gene ID</li>
@@ -190,7 +255,7 @@ head Mus_musculus.GRCm38.80.gtf</code></pre>
 <ul>
 <li>If you are sequencing your own data, the sequencing facility will almost always provide fastq files which can be aligned to a genome with an aligner of your choice.<br />
 </li>
-<li>For publicly available sequence data from GEO/SRA, the files are usually in the Sequence Read Archive (SRA) format. Prior to read alignment, these files need to be converted into the FASTQ format using the fastq-dump utility from the SRA Toolkit. We have included instructions on how to do this in <a href="../Supplementary_Materials/S1_Getting_raw_reads_from_SRA.html">Getting raw reads from SRA</a> under the Supplementary Material directory.</li>
+<li>For publicly available sequence data from GEO/SRA, the files are usually in the Sequence Read Archive (SRA) format. Prior to read alignment, these files need to be converted into the FASTQ format using the fastq-dump utility from the SRA Toolkit. We have included instructions on how to do this in <a href="S1_Getting_raw_reads_from_SRA.html">Getting raw reads from SRA</a> under the Supplementary Material directory.</li>
 </ul>
 <div id="refs" class="references">
 <div id="ref-Liao2014">
