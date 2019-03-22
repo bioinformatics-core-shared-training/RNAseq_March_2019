@@ -1,5 +1,6 @@
 include: "rules/download_data.skm"
 
+
 rule all:
     input:
         "featureCounts/total_samples.gene_count.txt"
@@ -61,3 +62,5 @@ rule featureCounts:
         "logs/featureCounts.total.log"
     shell:
         "featureCounts -a {input.gtf} -o {output} {input.bam} 2> {log}"
+        
+include: "rules/whippet.skm"
