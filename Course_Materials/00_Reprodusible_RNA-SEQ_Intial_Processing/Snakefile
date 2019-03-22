@@ -58,6 +58,6 @@ rule featureCounts:
     conda:
         "envs/core.yaml"
     log:
-        "logs/featureCounts.{sample}.log"
+        "logs/featureCounts.total.log"
     shell:
         "featureCounts -a {input.gtf} -o {output} {input.bam} 2> {log}"
