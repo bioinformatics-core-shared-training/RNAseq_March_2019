@@ -3,8 +3,6 @@ import random
 import csv
 from collections import defaultdict
 
-
-
 try:
     os.mkdir("FASTQ")
 except FileExistsError:
@@ -14,7 +12,6 @@ try:
     os.mkdir("download")
 except FileExistsError:
     pass
-
 
 
 SAMPLES = set([])
@@ -52,14 +49,25 @@ if os.path.isfile('download/genome.download.sh')==False:
         download_file.write("gzip -d Genome/dm6.fa.gz")
 
 
-# if os.path.isfile('download/transcripts.download.sh')==False:
-    
-#     with open("download/genome.download.sh", "w") as download_file :
-        
-#         download_file.write("#!/bin/bash" + "\n")
-#         download_file.write("wget http://hgdownload.soe.ucsc.edu/goldenPath/dm6/bigZips/dm6.fa.gz -O Gene_annotation/dm6.Ensembl.genes.gtf")
-#         download_file.write("gzip -d Genome/dm6.fa.gz")
-        
-        
-
 print( SAMPLES)
+
+        
+rule download_genome:
+    input:
+        "download/genome.download.sh"
+    output:
+        "Genome/dm6.fa"
+    conda:
+        "envs/download.yaml"
+    shell:
+        "bash {input}"
+    
+rule download_sample:
+    input:
+        "download/{sample}.download.sh"
+    output:
+        "FASTQ/{sample}.fastq.gz"
+    conda:
+        "envs/download.yaml"
+    shell:
+        "bash {input}"
