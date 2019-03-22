@@ -68,7 +68,7 @@ rule download_genome:
     input:
         "download/genome.download.sh"
     output:
-        "Genome/Genome/dm6.fa"
+        "Genome/dm6.fa"
     conda:
         "../envs/download.yaml"
     shell:
