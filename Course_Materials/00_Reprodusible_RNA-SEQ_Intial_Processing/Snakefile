@@ -43,8 +43,10 @@ rule samTobam:
         "hisat2/{sample}.sorted.bam"
     conda:
         "envs/core.yaml"
+    logs:
+        "logs/samTobam.{sample}.log"
     shell:
-        "samtools view -b  {input}  | samtools sort - -o {output} && samtools index {output}"
+        "samtools view -b  {input}  | samtools sort - -o {output} && samtools index {output} 2> {log}"
 
 rule featureCounts:
     input:
