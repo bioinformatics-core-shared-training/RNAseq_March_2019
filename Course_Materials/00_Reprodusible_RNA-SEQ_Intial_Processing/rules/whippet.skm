@@ -1,0 +1,30 @@
+configfile : "config.yaml"
+
+rule whippet_index:
+    input:
+        "Genome/dm6.fa",
+        "Gene_annotation/dm6.Ensembl.genes.gtf"
+    params:
+        bin = config["whippet_bin_folder"]
+    output:
+        "Whippet/Index/whippet.jls",
+        "Whippet/Index/whippet.jls.exons.tab.gz"
+    shell:
+        "julia {params.bin}/whippet-index.jl --fasta {input[0]} --gtf {input[1]} --index {output[0]}"
+
+
+rule  whippet_quant:
+    input:
+        "FASTQ/{sample}.fastq.gz",
+        "Whippet/Index/whippet.jls"
+    params:
+        bin = config["whippet_bin_folder"],
+        output = "Whippet/Quant/{sample}"
+    output:
+        "Whippet/Quant/{sample}.gene.tpm.gz",
+        "Whippet/Quant/{sample}.isoform.tpm.gz",
+        "Whippet/Quant/{sample}.jnc.gz",
+        "Whippet/Quant/{sample}.map.gz",
+        "Whippet/Quant/{sample}.psi.gz"
+    shell:
+        "julia {params.bin}/whippet-quant.jl --circ {input[0]}  -x {input[1]} -o {params.output}"
