@@ -54,14 +54,24 @@ if os.path.isfile('download/genome.download.sh')==False:
         download_file.write("gzip -d Genome/dm6.fa.gz")
 
 
+# if os.path.isfile('download/transcripts.download.sh')==False:
+    
+#     with open("download/genome.download.sh", "w") as download_file :
+        
+#         download_file.write("#!/bin/bash" + "\n")
+#         download_file.write("wget http://hgdownload.soe.ucsc.edu/goldenPath/dm6/bigZips/dm6.fa.gz -O Gene_annotation/dm6.Ensembl.genes.gtf")
+#         download_file.write("gzip -d Genome/dm6.fa.gz")
+        
+        
+
 print( SAMPLES)
 
 
 
 rule all:
     input:
-        expand("featureCounts/{sample}.gene_count.txt", sample=SAMPLES),
-        expand("Whippet/Quant/{sample}.psi.gz", sample=SAMPLES)
+        expand("featureCounts/{sample}.gene_count.txt", sample=SAMPLES)
+        #expand("Whippet/Quant/{sample}.psi.gz", sample=SAMPLES)
 
         
 rule download_genome:
