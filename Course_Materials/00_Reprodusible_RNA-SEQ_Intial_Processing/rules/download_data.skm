@@ -77,9 +77,9 @@ rule download_sample:
     conda:
         "../envs/download.yaml"
     log:
-        "../logs/download.{sample}.log"   
+        "logs/download.{sample}.log"   
     shell:
-        "bash {input}"
+        "bash {input} 2> {log}"
         
  
 rule download_all:
