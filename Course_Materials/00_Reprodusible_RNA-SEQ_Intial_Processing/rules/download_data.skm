@@ -13,6 +13,11 @@ try:
 except FileExistsError:
     pass
 
+try:
+    os.mkdir("logs")
+except FileExistsError:
+    pass
+
 
 SAMPLES = set([])
 
@@ -59,6 +64,8 @@ rule download_genome:
         "Genome/dm6.fa"
     conda:
         "../envs/download.yaml"
+    log:
+        "../logs/download_genome.log"
     shell:
         "bash {input}"
     
@@ -69,6 +76,8 @@ rule download_sample:
         "FASTQ/{sample}.fastq.gz"
     conda:
         "../envs/download.yaml"
+    log:
+        "../logs/download_sample.log"   
     shell:
         "bash {input}"
         
