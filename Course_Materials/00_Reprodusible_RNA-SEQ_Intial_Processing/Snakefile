@@ -63,17 +63,26 @@ rule all:
         expand("featureCounts/{sample}.gene_count.txt", sample=SAMPLES),
         expand("Whippet/Quant/{sample}.psi.gz", sample=SAMPLES)
 
-
-rule download_fastq:
+        
+rule download_genome:
+    input:
+        "download/genome.download.sh"
+    output:
+        "Genome/dm6.fa"
+    conda:
+        "../envs/download.yaml"
+    shell:
+        "bash {input}"
+    
+rule download_sample:
     input:
         "download/{sample}.download.sh"
     output:
         "FASTQ/{sample}.fastq.gz"
     conda:
-        "../envs/core.yaml"
+        "../envs/download.yaml"
     shell:
         "bash {input}"
-
 
 
 rule hisat2_Genome_index:
