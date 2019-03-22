@@ -9,26 +9,6 @@ rule whippet:
     input:
         expand("Whippet/Quant/{sample}.psi.gz", sample=SAMPLES)
         
-        
-rule download_genome:
-    input:
-        "download/genome.download.sh"
-    output:
-        "Genome/dm6.fa"
-    conda:
-        "envs/download.yaml"
-    shell:
-        "bash {input}"
-    
-rule download_sample:
-    input:
-        "download/{sample}.download.sh"
-    output:
-        "FASTQ/{sample}.fastq.gz"
-    conda:
-        "envs/download.yaml"
-    shell:
-        "bash {input}"
 
 
 rule hisat2_Genome_index:
@@ -50,7 +30,6 @@ rule hisat2_to_Genome:
     threads: 5
     shell:
         "hisat2 -p 5 -U {input.fastq} -x  Genome/Index/dm6  > {output}"
-
 
 
 rule samTobam:
