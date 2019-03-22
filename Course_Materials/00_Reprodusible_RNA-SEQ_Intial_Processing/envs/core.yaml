@@ -1,0 +1,8 @@
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - hisat2=2.1.0=py36pl5.22.0_0
+  - samtools=1.9
+  - subread
