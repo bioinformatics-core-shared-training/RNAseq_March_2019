@@ -1,15 +1,9 @@
-configfile : "config.yaml"
-import glob, os
-
-
-
-
+#configfile : "config.yaml"
 
 import glob, os
 import random
 import csv
 from collections import defaultdict
-
 
 
 
