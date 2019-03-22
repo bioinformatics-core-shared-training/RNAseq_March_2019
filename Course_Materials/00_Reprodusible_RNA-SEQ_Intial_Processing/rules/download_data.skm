@@ -65,10 +65,9 @@ rule download_genome:
     conda:
         "../envs/download.yaml"
     log:
-        log1 = "../logs/download_genome.err.log",
-        log2 = "../logs/download_genome.out.log"
+        "logs/download_genome.log",
     shell:
-        "bash {input}"
+        "bash {input} 2> {log}"
     
 rule download_sample:
     input:
