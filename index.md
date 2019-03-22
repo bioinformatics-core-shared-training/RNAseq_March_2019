@@ -32,7 +32,7 @@ here for you.
 * Dominique-Laurent Couturier - Bioinformatics Core, Cancer Research UK Cambridge Institute 
 * Abbi Edwards - Bioinformatics Core, Cancer Research UK Cambridge Institute
 * Yasin Memari - Medical Genetics and MRC Cancer Unit, University of Cambridge
-* Guillermo Parada Gonzalez - Wellcome Sanger Institue and Wellcome Trust/ Cancer Research UK Gurdon Institute, University of Cambridge
+* Guillermo Parada - Wellcome Sanger Institue and Wellcome Trust/ Cancer Research UK Gurdon Institute, University of Cambridge
 * Ashley D Sawle - Bioinformatics Core, Cancer Research UK Cambridge Institute
 
 ## Timetable
