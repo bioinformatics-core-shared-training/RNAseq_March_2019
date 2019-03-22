@@ -1,0 +1,3 @@
+NameError in line 33 of /lustre/scratch117/cellgen/team218/gp7/Course/RNAseq_March_2019/Course_Materials/00_Reprodusible_RNA-SEQ_Intial_Processing/Snakefile:
+name 'DATA' is not defined
+  File "/lustre/scratch117/cellgen/team218/gp7/Course/RNAseq_March_2019/Course_Materials/00_Reprodusible_RNA-SEQ_Intial_Processing/Snakefile", line 33, in <module>

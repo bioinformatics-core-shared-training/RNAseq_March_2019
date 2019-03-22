@@ -30,7 +30,7 @@ if os.path.isfile('./NCBI_accession_list.txt'):
         for row in reader:
 
             RUN = row[0]
-            DATA.add(RUN)
+            SAMPLES.add(RUN)
 
             file_name = "download/" + RUN + ".download.sh"
             command = "fastq-dump.2.9.1 --split-files -O FASTQ "
