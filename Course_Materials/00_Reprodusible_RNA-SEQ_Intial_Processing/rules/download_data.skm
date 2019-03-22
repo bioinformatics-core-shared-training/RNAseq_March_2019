@@ -50,7 +50,7 @@ if os.path.isfile('download/genome.download.sh')==False:
     with open("download/genome.download.sh", "w") as download_file :
         
         download_file.write("#!/bin/bash" + "\n")
-        download_file.write("wget http://hgdownload.soe.ucsc.edu/goldenPath/dm6/bigZips/dm6.fa.gz -O Genome/dm6.fa.gz")
+        download_file.write("wget http://hgdownload.soe.ucsc.edu/goldenPath/dm6/bigZips/dm6.fa.gz -O Genome/dm6.fa.gz"  + "\n")
         download_file.write("gzip -d Genome/dm6.fa.gz")
 
 
