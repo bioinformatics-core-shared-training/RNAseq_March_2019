@@ -1,9 +1,0 @@
-fastq-dump -O FASTQ/ --accession SRR7889581
-fastq-dump -O FASTQ/ --accession SRR7889582
-fastq-dump -O FASTQ/ --accession SRR7889583
-fastq-dump -O FASTQ/ --accession SRR7889584
-fastq-dump -O FASTQ/ --accession SRR7889585
-fastq-dump -O FASTQ/ --accession SRR7889597
-fastq-dump -O FASTQ/ --accession SRR7889598
-fastq-dump -O FASTQ/ --accession SRR7889599
-fastq-dump -O FASTQ/ --accession SRR7889600
