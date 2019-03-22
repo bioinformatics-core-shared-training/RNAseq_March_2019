@@ -71,3 +71,9 @@ rule download_sample:
         "envs/download.yaml"
     shell:
         "bash {input}"
+        
+ 
+rule download_all:
+    input:
+        "Genome/dm6.fa",
+        expand("FASTQ/{sample}.fastq.gz", sample=SAMPLES)
