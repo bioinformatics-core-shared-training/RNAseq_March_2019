@@ -15,15 +15,20 @@ def main(gffcompare_annotated_gtf, gffcompare_tracking, exon_number_filter, clas
   
   for row in csv.reader(open(gffcompare_annotated_gtf), delimiter="\t"):
 
+    tag_dict = {}
+    
     for tag in row[-1].split(";"):
       tag_value = tag.strip(" ").split(" ")
       
-      tag_dict = {}
+      transcript_id = ""
       
       if len(tag_value)==2:
         tag, value = tag_value
         
-        tag_dict[tag] = value
+        if tag=="transcript_id":
+          transcript_id=value
+        else:
+          tag_dict[transcript_id][tag] = value
         
       print(tag_dict)
         
