@@ -30,6 +30,7 @@ def main(gffcompare_annotated_gtf, gffcompare_tracking, exon_number_filter, clas
         
         if tag=="transcript_id":
           transcript_id=value
+          print(tag)
         else:
           tag_dict[transcript_id][tag] = value
         
