@@ -52,7 +52,7 @@ def main(gffcompare_annotated_gtf, gffcompare_tracking, exon_number_filter, clas
     
     if exon_number>=exon_number_filter and stringtie_class in class_filter.split(","):
     
-      print(stringtie_class, exon_number)
+      print(row, sep="\t")
       
 if __name__ == '__main__':
     main(sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4])
