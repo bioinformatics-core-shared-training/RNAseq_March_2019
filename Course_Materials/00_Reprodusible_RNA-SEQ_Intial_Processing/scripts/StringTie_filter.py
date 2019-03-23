@@ -1,9 +1,11 @@
 import sys
 import csv
+from collections import defaultdict
 
 def main(gffcompare_annotated_gtf, gffcompare_tracking, exon_number_filter, class_filter ):
 
   transcript_class_dict = {}
+  tag_dict = collections.defaultdict(dict)
   
   for row in csv.reader(open(gffcompare_tracking), delimiter="\t"):
     
@@ -15,8 +17,7 @@ def main(gffcompare_annotated_gtf, gffcompare_tracking, exon_number_filter, clas
   
   for row in csv.reader(open(gffcompare_annotated_gtf), delimiter="\t"):
 
-    tag_dict = {}
-    
+
     for tag in row[-1].split(";"):
       tag_value = tag.strip(" ").split(" ")
       
@@ -30,11 +31,7 @@ def main(gffcompare_annotated_gtf, gffcompare_tracking, exon_number_filter, clas
         else:
           tag_dict[transcript_id][tag] = value
         
-      print(tag_dict)
-        
-        
-        
-        
+    print(tag_dict)
 
       
 if __name__ == '__main__':
