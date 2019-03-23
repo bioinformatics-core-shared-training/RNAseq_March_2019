@@ -27,7 +27,7 @@ rule StringTie_gffcompare:
     ref_gtf = "Gene_annotation/dm6.Ensembl.genes.gtf",
     genome = "Genome/dm6.fa"
   params:
-    output_prefix = "StringTie/gffcompare"
+    output_prefix = "gffcompare/gffcompare"
   output:
     gtf = "gffcompare/gffcompare.annotated.gtf"
   conda:
