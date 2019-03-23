@@ -29,7 +29,7 @@ rule StringTie_gffcompare:
   params:
     output_prefix = "StringTie/gffcompare"
   output:
-    gtf = "gffcompare/gffcompare.annotated.gtf",
+    gtf = "gffcompare/gffcompare.annotated.gtf"
   conda:
     "../envs/stringtie.yaml"
   shell:
