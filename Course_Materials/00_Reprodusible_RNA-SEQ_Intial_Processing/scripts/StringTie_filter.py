@@ -18,7 +18,7 @@ def main(gffcompare_annotated_gtf, gffcompare_tracking ):
     print(row)
     
     for tag in row[-1].split(";"):
-      print(tag)
+      print(tag.split(" "))
   
   
 
