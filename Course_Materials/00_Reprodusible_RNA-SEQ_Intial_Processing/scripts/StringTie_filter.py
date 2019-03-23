@@ -21,20 +21,17 @@ def main(gffcompare_annotated_gtf, gffcompare_tracking, exon_number_filter, clas
     for tag in row[-1].split(";"):
       tag_value = tag.strip(" ").split(" ")
       
-      transcript_id = ""
       
       if len(tag_value)==2:
         tag, value = tag_value
-        
-        print(tag, value)
+ 
         
         if tag=="transcript_id":
           transcript_id=value
-          print(tag)
         else:
           tag_dict[transcript_id][tag] = value
         
-    #print(tag_dict)
+  print(tag_dict)
 
       
 if __name__ == '__main__':
