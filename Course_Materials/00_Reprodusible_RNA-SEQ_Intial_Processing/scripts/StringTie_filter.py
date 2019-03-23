@@ -1,7 +1,7 @@
 import sys
 import csv
 
-def main(gffcompare_annotated_gtf, gffcompare_tracking ):
+def main(gffcompare_annotated_gtf, gffcompare_tracking, exon_number_filter, class_filter ):
 
   transcript_class_dict = {}
   
@@ -11,17 +11,26 @@ def main(gffcompare_annotated_gtf, gffcompare_tracking ):
     transcript = row[4].split("|")[1]
 
     transcript_class_dict[transcript] = stringtie_class
-
+    
   
   for row in csv.reader(open(gffcompare_annotated_gtf), delimiter="\t"):
-    
-    print(row)
-    
+
     for tag in row[-1].split(";"):
-      print(tag.strip(" ").split(" "))
-  
-  
+      tag_value = tag.strip(" ").split(" ")
+      
+      tag_dict = {}
+      
+      if len(tag_value)==2:
+        tag, value = tag_value
+        
+        tag_dict[tag] = value
+        
+      print(tag_dict)
+        
+        
+        
+        
 
-
+      
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4])
