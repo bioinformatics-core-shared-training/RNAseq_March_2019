@@ -1,0 +1,11 @@
+rule Stringtie_Assemble:
+  input:
+    bam = "hisat2/SRR7889583.sorted.bam"
+    gtf_ref = "Gene_annotation/dm6.Ensembl.genes.gtf
+  output:
+    "StringTie/{sample}.assemble.gtf"
+  conda:
+    "../envs/stringtie.yaml"
+  shell:
+    "stringtie {input.bam} -G {input.gtf_ref} -o {output}"
+    
