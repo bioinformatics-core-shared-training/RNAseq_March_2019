@@ -47,10 +47,12 @@ def main(gffcompare_annotated_gtf, gffcompare_tracking, exon_number_filter, clas
         if tag=="transcript_id":
           transcript_id=value
       
-    exon_number = tag_dict[transcript_id]["exon_number"]
+    exon_number = int(tag_dict[transcript_id]["exon_number"].strip('"'))
     stringtie_class = transcript_class_dict[transcript_id.strip('"')]
     
-    print(stringtie_class, exon_number)
+    if exon_number>=exon_number_filter and stringtie_class in class_filter.split(","):
+    
+      print(stringtie_class, exon_number)
       
 if __name__ == '__main__':
     main(sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4])
