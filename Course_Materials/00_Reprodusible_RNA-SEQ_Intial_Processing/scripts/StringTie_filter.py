@@ -48,7 +48,7 @@ def main(gffcompare_annotated_gtf, gffcompare_tracking, exon_number_filter, clas
           transcript_id=value
       
     exon_number = tag_dict[transcript_id]["exon_number"]
-    stringtie_class = transcript_class_dict[transcript_id]
+    stringtie_class = transcript_class_dict[transcript_id.strip(")]
     
     print(stringtie_class, exon_number)
       
