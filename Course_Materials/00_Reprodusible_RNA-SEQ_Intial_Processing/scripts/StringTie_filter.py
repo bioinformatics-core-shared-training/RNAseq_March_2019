@@ -5,7 +5,7 @@ from collections import defaultdict
 def main(gffcompare_annotated_gtf, gffcompare_tracking, exon_number_filter, class_filter ):
 
   transcript_class_dict = {}
-  tag_dict = collections.defaultdict(dict)
+  tag_dict = defaultdict(dict)
   
   for row in csv.reader(open(gffcompare_tracking), delimiter="\t"):
     
