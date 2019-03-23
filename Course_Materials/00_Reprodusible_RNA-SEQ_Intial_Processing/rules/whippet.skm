@@ -9,8 +9,6 @@ rule whippet_index:
     output:
         "Whippet/Index/whippet.jls",
         "Whippet/Index/whippet.jls.exons.tab.gz"
-    conda:
-        "../envs/whippet.yaml"
     shell:
         "julia {params.bin}/whippet-index.jl --fasta {input[0]} --gtf {input[1]} --index {output[0]}"
 
@@ -28,7 +26,5 @@ rule  whippet_quant:
         "Whippet/Quant/{sample}.jnc.gz",
         "Whippet/Quant/{sample}.map.gz",
         "Whippet/Quant/{sample}.psi.gz"
-    conda:
-        "../envs/whippet.yaml"
     shell:
         "julia {params.bin}/whippet-quant.jl --circ {input[0]}  -x {input[1]} -o {params.output}"
