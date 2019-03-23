@@ -1,4 +1,4 @@
-rule Stringtie_Assemble:
+rule StringTie_Assemble:
   input:
     bam = "hisat2/{sample}.sorted.bam",
     gtf_ref = "Gene_annotation/dm6.Ensembl.genes.gtf"
@@ -8,4 +8,17 @@ rule Stringtie_Assemble:
     "../envs/stringtie.yaml"
   shell:
     "stringtie {input.bam} -G {input.gtf_ref} -o {output}"
+    
+
+rule StringTie_Merge:
+  input:
+    bams = expand("StringTie/{sample}.assemble.gtf", sample=SAMPLES)
+  output:
+    merged_gtf = "StringTie/merged.assemble.gtf"
+  conda:
+    "../envs/stringtie.yaml"
+  shell:
+    "stringtie --merge {input} -o {output}"
+    
+  
     
