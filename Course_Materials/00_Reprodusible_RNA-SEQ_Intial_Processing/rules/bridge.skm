@@ -10,7 +10,7 @@ rule StringTie_filer:
     output:
         gtf_filtered = "gffcompare/gffcompare.annotated.filtered.gtf"
     shell:
-        `python scripts/StringTie_filter.py {input} {params} > {output}`
+        "python scripts/StringTie_filter.py {input} {params} > {output}"
         
 rule extrend_refrence:
     input:
