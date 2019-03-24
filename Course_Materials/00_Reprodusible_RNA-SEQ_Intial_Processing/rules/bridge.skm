@@ -1,4 +1,4 @@
-# This is a costume make script that filter gffcompare output gtf by number of exons and transcript classification codes (http://ccb.jhu.edu/software/stringtie/gffcompare.shtml#transfrag-class-codes)
+# StringTie_filter.py is a costume make script that filter gffcompare output gtf by number of exons and transcript classification codes (http://ccb.jhu.edu/software/stringtie/gffcompare.shtml#transfrag-class-codes)
 
 rule StringTie_filer:
     input:
