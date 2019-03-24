@@ -64,4 +64,5 @@ rule featureCounts:
         "featureCounts -a {input.gtf} -o {output} {input.bam} 2> {log}"
 
 include: "rules/stringtie.skm"
+include: "rules/bridge.skm
 include: "rules/whippet.skm"
