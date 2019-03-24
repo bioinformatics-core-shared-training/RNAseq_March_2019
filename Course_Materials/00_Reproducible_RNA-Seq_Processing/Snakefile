@@ -25,7 +25,7 @@ rule hisat2_to_Genome:
         fastq = "FASTQ/{sample}.fastq.gz",
         genome = "Genome/Index/dm6.1.ht2"
     output:
-        "hisat2/{sample}.sam"
+        temp("hisat2/{sample}.sam")
     threads: 5
     conda:
         "envs/core.yaml"
@@ -36,7 +36,7 @@ rule hisat2_to_Genome:
 
 rule samTobam:
     input:
-        temp("hisat2/{sample}.sam")
+        "hisat2/{sample}.sam"
     output:
         "hisat2/{sample}.sorted.bam"
     conda:
