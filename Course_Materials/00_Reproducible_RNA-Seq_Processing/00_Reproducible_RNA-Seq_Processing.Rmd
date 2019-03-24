@@ -170,7 +170,7 @@ Open R-studio and open the `Analysis_Notebook.Rmd` file that is located at the c
 
 library(data.table)
 
-metadata <- fread("./SraRunTable.txt") #Please be sure to place the file under ./Course_Materials/00_Reproducible_RNA-SEQ_Initial_Processing/
+metadata <- fread("./SraRunTable.txt") #Please be sure to place the file under ./Course_Materials/00_Reproducible_RNA-Seq_Processing/
 
 metadata
 ```
