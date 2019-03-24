@@ -6,7 +6,7 @@ rule StringTie_filer:
         tracking = "gffcompare/gffcompare.tracking"
     params:
         min_number_of_exons = 3,
-        gffcompare_allowed_classes = k,m,n,j,x,i,y,u
+        gffcompare_allowed_classes = "k,m,n,j,x,i,y,u"
     output:
         gtf_filtered = "gffcompare/gffcompare.annotated.filtered.gtf"
     shell:
