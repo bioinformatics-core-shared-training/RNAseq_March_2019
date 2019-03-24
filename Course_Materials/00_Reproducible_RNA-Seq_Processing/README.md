@@ -14,9 +14,16 @@ Activate conda enviroment:
     
 # Run #
 
-In order to check that the full snakemake pipeline is working correctly, we can try with an dry-run:
+In order to check that the full snakemake pipeline is working correctly, we can try with an dry-run (`-n`) while we print the commands of every step (`-p`):
 
-    snakemake -np whippet_delta
+    snakemake --use-conda -np whippet_delta
+
+To run the full you need to download D. melanogaster transcript annotation from UCSC Table Browser and save it as `Gene_annotation/dm6.Ensembl.genes.gtf` (replacing the empty file from this repository). Then select the number of processor you want to run snakemake with and run it as:
+
+    snakemake --use-conda whippet_delta
+    
+
+
     
 # Run from a cluster #
 
