@@ -1,4 +1,4 @@
-include: "rules/download_data.skm"
+include: "rules/00_download_data.skm"
 
 #################################### Mapping and Quantification ################################
 #
@@ -72,15 +72,15 @@ rule featureCounts:
 ###############################################    
     
     
-include: "rules/stringtie.skm"    
-include: "rules/bridge.skm"  
-include: "rules/whippet_quant.skm"
+include: "rules/01_stringtie.skm"    
+include: "rules/02_bridge.skm"  
+include: "rules/03_whippet_quant.skm"
 
 rule whippet_quant:    #This is a calling point 
     input:
         expand("Whippet/Quant/{sample}.psi.gz", sample=SAMPLES)
     
-include: "rules/whippet_delta.skm"
+include: "rules/04_whippet_delta.skm"
     
 
     
