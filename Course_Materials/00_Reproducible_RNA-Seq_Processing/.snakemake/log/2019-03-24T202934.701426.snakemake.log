@@ -1,4 +1,0 @@
-The flag 'temp' used in rule samTobam is only valid for outputs, not inputs.
-CreateRuleException in line 79 of /Users/gp7/@Github/RNAseq_March_2019/Course_Materials/00_Reprodusible_RNA-SEQ_Intial_Processing/Snakefile:
-The name whippet_quant is already used by another rule
-  File "/Users/gp7/@Github/RNAseq_March_2019/Course_Materials/00_Reprodusible_RNA-SEQ_Intial_Processing/Snakefile", line 79, in <module>
