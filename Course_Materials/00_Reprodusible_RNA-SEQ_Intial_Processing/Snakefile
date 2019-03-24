@@ -1,16 +1,13 @@
 include: "rules/download_data.skm"
 
-
-rule all:
-    input:
-        "featureCounts/total_samples.gene_count.txt"
- 
-rule whippet:
-    input:
-        expand("Whippet/Quant/{sample}.psi.gz", sample=SAMPLES)
-        
-
-rule hisat2_Genome_index:
+#################################### Mapping and Quantification ################################
+#
+# In this module, we are declaring four rules that are designed to map all the reads to the  
+# genome (hisat2) and count the reads that map to each gene (featureCounts). 
+#
+#########################################################################################    
+    
+rule hisat2_Genome_index:  #This is a rule and represent the first step of mapping the reads with hisat (indexing the genome)
     input:
         "Genome/dm6.fa"
     output:
@@ -63,6 +60,28 @@ rule featureCounts:
     shell:
         "featureCounts -a {input.gtf} -o {output} {input.bam} 2> {log}"
 
-include: "rules/stringtie.skm"
-include: "rules/bridge.skm"
-include: "rules/whippet.skm"
+        
+############# Downstream analysis #############
+#
+# Everything below corresponds to workflows to perform different anlyses to get meaningful 
+# quantitative data. On rules/ folder you can see the different snakemake modules (.skm files)
+# which are `included` to be connected with the previous rules that are explicit on this
+# current script. The `include` statement allows the integration of the .skm files. Notice 
+# that all these snakemake scripts work under python, thus any python syntax can be used.
+# 
+###############################################    
+    
+    
+include: "rules/stringtie.skm"    
+include: "rules/bridge.skm"  
+include: "rules/whippet_quant.skm"
+
+rule whippet_quant:    #This is a calling point 
+    input:
+        expand("Whippet/Quant/{sample}.psi.gz", sample=SAMPLES)
+    
+include: "rules/whippet_delta.skm"
+    
+
+    
+
