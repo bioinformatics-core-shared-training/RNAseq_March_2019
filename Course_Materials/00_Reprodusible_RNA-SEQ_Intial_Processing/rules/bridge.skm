@@ -1,0 +1,22 @@
+# This is a costume make script that filter gffcompare output gtf by number of exons and transcript classification codes (http://ccb.jhu.edu/software/stringtie/gffcompare.shtml#transfrag-class-codes)
+
+rule StringTie_filer:
+    input:
+        gtf = "gffcompare/gffcompare.annotated.gtf",
+        tracking = "gffcompare/gffcompare.tracking"
+    params:
+        min_number_of_exons = 3,
+        gffcompare_allowed_classes = k,m,n,j,x,i,y,u
+    output:
+        gtf_filtered = "gffcompare/gffcompare.annotated.filtered.gtf"
+    shell:
+        `python scripts/StringTie_filter.py {input} {params} > {output}`
+        
+rule extrend_refrence:
+    input:
+        ref_gtf = "Gene_annotation/dm6.Ensembl.genes.gtf",
+        gtf_filtered = "gffcompare/gffcompare.annotated.filtered.gtf"
+    output:
+        extended_gtf = "gffcompare/extended_ref_annotation.gtf"
+    shell:
+        "merge {input} > {output}"
