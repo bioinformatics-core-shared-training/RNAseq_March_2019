@@ -35,7 +35,7 @@ rule  whippet_quant:
 
 glias = ["SRR7889597", "SRR7889598" , "SRR7889599", "SRR7889600"]
 neurons = ['SRR7889581', 'SRR7889582', 'SRR7889583', 'SRR7889584', 'SRR7889585']
-compare_name = glia_vs_neuron
+compare_name = 'glia_vs_neuron'
 
 rule whippet_delta:
     input:
