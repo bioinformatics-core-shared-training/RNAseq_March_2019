@@ -54,8 +54,6 @@ if os.path.isfile('download/genome.download.sh')==False:
         download_file.write("gzip -d Genome/dm6.fa.gz")
 
 
-print( SAMPLES)
-
         
 rule download_genome:
     input:
