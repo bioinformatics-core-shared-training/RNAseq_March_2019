@@ -15,7 +15,11 @@ Create a conda enviroment with snakemake installed on it. We can call this virtu
 Activate conda enviroment:
     
     conda activate snakemake_env
-    
+
+# Download Data #
+
+    snakemake --use-conda download_all download_all
+
 # Run #
 
 In order to check that the full snakemake pipeline is working correctly, we can try with an dry-run (`-n`) while we print the commands of every step (`-p`):
