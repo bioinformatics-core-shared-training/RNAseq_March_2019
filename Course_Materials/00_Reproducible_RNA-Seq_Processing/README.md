@@ -1,12 +1,16 @@
 # Install #
 
+Setup [miniconda](https://docs.conda.io/en/latest/miniconda.html) and then update conda: 
+
+    conda update -n base -c defaults conda
+
 Clone the course repository:
 
     git clone https://github.com/bioinformatics-core-shared-training/RNAseq_March_2019/
 
 Create a conda enviroment with snakemake installed on it. We can call this virtual enviroment `snakemake_env`, but any other name would also work.
 
-    conda create -n snakemake_env snakemake   
+    conda create -n snakemake_env snakemake julia=0.6.1   
 
 Activate conda enviroment:
     
@@ -22,7 +26,6 @@ To run the full you need to download D. melanogaster transcript annotation from 
 
     snakemake --use-conda whippet_delta
     
-
 
     
 # Run from a cluster #
