@@ -43,7 +43,7 @@ _Day 1_
 
 10:15 - 10:45 - [Introduction to Alignment and Quantification](slides/Day1_Lecture.pptx) - Guillermo Parada Gonzalez
 
-10:30 - 12:30 [Practical: Basic Unix, input file formats and quality control](slides/DAY_1.pdf)
+10:30 - 12:30 [Practical: Basic Unix, input file formats and quality control](Course_Materials/00_Reproducible_RNA-Seq_Processing/Day1.html)
 
 12:30 - 13:30 Lunch
 
