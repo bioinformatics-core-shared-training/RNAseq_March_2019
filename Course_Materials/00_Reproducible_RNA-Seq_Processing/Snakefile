@@ -50,14 +50,14 @@ rule bamstats:
     input:
         "hisat2/{sample}.sorted.bam"
     output:
-        stats_txt = "QC/{sample}.stats",
-        stats_html = "QC/{sample}.plots.html"
+        stats_txt = "QC/{sample}/{sample}.stats",
+        stats_html = "QC/{sample}/{sample}.plots.html"
     params:
-        "QC/{sample}.plots"
+        "QC/{sample}/{sample}.plots"
     conda:
         "envs/core.yaml"
     shell:
-        "samtools stats {input} > {output.stats_txt} && plot-bamstats -p {params} {output.stats_txt} "
+        "samtools stats {input} > {output.stats_txt} && plot-bamstats -p {params} {output.stats_txt}"
     
 
 rule featureCounts:
