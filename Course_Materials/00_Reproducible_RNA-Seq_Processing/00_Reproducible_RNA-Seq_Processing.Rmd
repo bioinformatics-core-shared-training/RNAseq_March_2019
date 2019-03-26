@@ -1,5 +1,5 @@
 ---
-title: " RNA-seq analysis "
+title: " Reproducible RNA-seq Proceessing "
 output: html_notebook
 ---
 
@@ -126,7 +126,7 @@ Process `dm6.Ensembl.genes.bed12` to find the five transcripts with the highest 
 
 **Exercise 2.3.3**
 
-Process `dm6.Ensembl.genes.` to find the total number of genes
+Process `dm6.Ensembl.genes.gtf` to find the total number of genes
 
 
 # 3. Quality control before alingment
@@ -310,7 +310,9 @@ B) Open IGV, load D. melanogaster's genome (dm6) and load the sorted bamfile.
 
 *Load the reference genome*. On the top menu bar find the genomes dropdown (top-left) and  then find  `D. melanogaster` assembly dm6. You might need to click on ‘More...’ to see a list of available genomes.
 
-*Load the BAM file*. On the top menu bar go to ‘File –> Load from File...’ and select the sorted BAM file you have created on the previous step.  
+*Load the BAM file*. On the top menu bar go to ‘File –> Load from File...’ and select the sorted BAM file you have created on the previous step.
+
+Zoom in into a particular gene to see the read alignments. 
 
 
 ## 4.5 FeatureCounts
@@ -340,10 +342,60 @@ By doing this we created a virtual environment, called `snakemake_env` that has 
 
 `conda activate snakemake_env`
 
-As we already wrote a `snakemake` pipeline for you, we are going to demonstrate you some of its properties and how to use it.
+As we already wrote a `snakemake` pipeline for you, we are going to demonstrate you some of its properties and how to use it. To see the code from the this pipeline, Use `Atom` (or any text editor) to open the `Snakefile`. Can you recognize some of the steps that we have done already?. Every `rule`represent a step of the analysis. For example:
 
 
-# 5.1 Quantifying all the samples at once
+```{python}
+
+rule hisat2_Genome_index:
+    input:
+        "Genome/dm6.fa"
+    output:
+        "Genome/Index/dm6.1.ht2"
+    threads: 7
+    conda:
+        "envs/core.yaml"
+    log:
+        "logs/hisat2_Genome_index.log"
+    shell:
+        "hisat2-build -p {threads} {input} Genome/Index/dm6 2> {log}"
+```
+
+This code correspond to the indexing step, in which it takes `Genome/dm6.fa` as input and `Genome/Index/dm6.1.ht2` as output. The rules have several `key` words by which different parts of the command are declared:
+* input: set of intput files, in this case just "Genome/dm6.fa"
+* output: set of output files. In this case, more output files are created, but they do not have to be pointed by the commands, we can just refer to one of the files that is created. Snakemake will check if this file is successfully created after the process is finished.
+* threads: number of processors
+* conda: the virtual environment in which the process will be run.
+* log : file that store anything that hisat2 outputs while is creating the index.
+* shell : This is the formula to create the shell command given all the parameters described above.  
+
+
+## 5.1 Quantifying all the samples at once
+
+We have only qualified one sample so far, but now executing the Snakefie, we can process all the other samples in parallel. For this, we first are going to do a `dry-run` to check the list of commands that snakemake will run for us. On the command line (in our base folder, `00_Reproducible_RNA-Seq_Processing`), please write:
+
+`snakemake -np featureCounts`
+
+This command shows us all the steps that snakemake will until executing a rule named *featureCounts* (see Snakefile's code) which run `featureCounts` over all the samples. Where `-n` prevent snakemake from running the pipeline and `-p` prints the commands for each step.  
+
+To visualise these steps run:
+
+`snakemake featureCounts --dag | dot -Tpng > featureCounts.png`
+
+This will produce the following image:
+
+![](Images/featureCounts.png)
+
+Which help us to understand the planned job execution.
+
+Finally, to run these steps we need to enable snakemake to use the environment files are needed for each rule by including `--use-conda` and also we should limit the number of processors to 7 with `--cores 7`.
+
+**Exercise 5.1.1**
+
+Execute `snakemake` to quantify all the samples using featureCounts. Look inside `Snakefile`code to see where the final output of featureCount will be stored and compare it with the output we previously had using featureCounts.  
+
+
+
 
 
 
