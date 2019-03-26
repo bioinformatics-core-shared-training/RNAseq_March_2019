@@ -160,7 +160,7 @@ Check the [study runs](https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=SRP16233
 
 **Exercise 3.2.2**
 
-Open R-studio and open the `Analysis_Notebook.Rmd` file that is located at the course folder. This is an R-notebook file, that has all the code used to generate this document. But, now when you open this file you will be able to run `chunks` of code interactively inside R-studio. Run the following chunk by clicking at the green play button.
+Open R-studio and open the `00_Reproducible_RNA-Seq_Processing.Rmd` file that is located at the course folder. This is an R-notebook file, that has all the code used to generate this document. But, now when you open this file you will be able to run `chunks` of code interactively inside R-studio. Run the following chunk by clicking at the green play button.
 
 ```{r}
 
@@ -255,7 +255,7 @@ To start mapping RNA-seq reads to the genome, we need to index the genome. The c
 **Exercise 4.1.1.**
 
 
-Go to `Course_Materials/00_Reproducible_RNA-Seq_Processing` directory using `cd`. Do `ls` to list the directories and create a new folder called `Index` inside `Genome` folder. Then run the following command: 
+Go to `Course_Materials/00_Reproducible_RNA-Seq_Processing` directory using `cd` (This is going to be our base directory to solve all the following exercises). Do `ls` to list the directories and create a new folder called `Index` inside `Genome` folder. Then run the following command: 
 
 `hisat2-build -p 7 Genome/dm6.fa Genome/Index/dm6`
 
@@ -280,11 +280,20 @@ hint: use `hisat --help` and look for -p -U -x flags and tt the end of the comma
 
 ## 4.3 FeatureCounts
 
-Finnaly to count the number of reads we will use FeatureCounts 
+To count the number of reads we will use FeatureCounts, which uses a gene annotation file (GTF) to process the genomic intervals of every gene and count all the reads that map to the exonic regions. 
+
+**Exercise 4.2.2**
+
+Run featureCounts providing the transcript annotation and the same file you produced with hisat2. To do this, read the featureCount help manual and find the rights flags run featureCounts (hint: read the `Required arguments` section).
+
+**Exercise 4.2.2**
+
+Find the gene with the highest number of counts. Can we say this gene is the one with higher expression levels on this sample?
+
 
 # 5. Introduction to repordusible bioinformatics
 
-We
+
 
 
 
