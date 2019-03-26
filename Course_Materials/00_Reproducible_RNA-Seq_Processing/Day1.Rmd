@@ -160,7 +160,7 @@ Check the [study runs](https://trace.ncbi.nlm.nih.gov/Traces/study/?acc=SRP16233
 
 **Exercise 3.2.2**
 
-Open R-studio and open the `00_Reproducible_RNA-Seq_Processing.Rmd` file that is located at the course folder. This is an R-notebook file, that has all the code used to generate this document. But, now when you open this file you will be able to run `chunks` of code interactively inside R-studio. Run the following chunk by clicking at the green play button.
+Open R-studio and open the `Day1.Rmd` file that is located at the course folder. This is an R-notebook file, that has all the code used to generate this document. But, now when you open this file you will be able to run `chunks` of code interactively inside R-studio. Run the following chunk by clicking at the green play button.
 
 ```{r}
 
