@@ -218,8 +218,6 @@ ggplot(data=metadata) +
 ```
 
 
-
-
 inside `aes( )` are the variables and we can also define a variable as the colour:
 
 
@@ -238,57 +236,55 @@ ggplot(data=metadata) +
 ```
 
 
-
 From this plot, we can clearly see that one of the samples that were taken from central neurons is much smaller than the rest. This factor needs to be considered at the time we analyze the samples, as this poorly sequenced sample might have lead to less accurate mRNA quantification and it might need to be removed for quantitative analyses. 
 
 
 
-# 4. Mapping reads to the genome
+# 4. Mapping reads to the genome and getting raw counts
 
 After we have a diagnosis of the data quality, we can start to analyse the data. Usually, the first step into the analysis requires mapping the RNA-seq reads to the genome. There are numerous tools to do perform short read alignment and the choice of it should be carefully made according to the analysis goals and requirements. Hisat2 is a very fastq tool that has been shown to have a good performance on published benchmarks. 
 
-To start mapping RNA-seq reads to the genome, we need to index the genome. The command to do this is `hisat2-build`. 
 
 ## 4.1 Indexing the genome for Hisat2
 
 
-```{bash}
-hisat2-build --help
-```
+To start mapping RNA-seq reads to the genome, we need to index the genome. The command to do this is `hisat2-build`. 
+
+`hisat2-build --help`
+
+**Exercise 4.1.1.**
 
 
-On the comand-line execute (you need to be at the Course_materials folder)
+Go to `Course_Materials/00_Reproducible_RNA-Seq_Processing` directory using `cd`. Do `ls` to list the directories and create a new folder called `Index` inside `Genome` folder. Then run the following command: 
 
-```{bash}
+`hisat2-build -p 7 Genome/dm6.fa Genome/Index/dm6`
 
-hisat2-build -p 5 Genome/dm6.fa Genome/Index/dm6
+This command will use the genome (located at `Genome/dm6.fa`) and it will generate the index files on `Genome/Index/`. All the files will start with `dm6` prefix. Take a look at `hisat2-build` help, 
 
-```
-
-
-This command will use the genome (located at `Genome/dm6.fa`) and it will generate the index files on `Genome/Index/`. All the files will start with `dm6` prefix
+A) Why do we use `-p 7` and what is the maximun=m value we should use on these machines?
+B) How many files are created on this process? 
 
 
-## 4.2 Runing hisat2
+## 4.2 Hisat2
 
 
 To map the reads to the genome we need to run hisat2. Take a quick look to hisat2's description
 
-```{bash}
-hisat2 --help
-
-```
+`hisat2 --help`
 
 **Exercise 4.2.1**
 
-Run hisat2 for the smallest file, located at FASTQ folder using 5 proccesors. Save the results inside a folder named `hisat2` (create it before using `mkdir`) and save the results using the right extension (`.sam`).
-hint: use `hisat --help` and look for -p -U -x -S flags.
+Run hisat2 for the smallest file, located at FASTQ folder using 7 proccesors. Save the results inside a folder named `hisat2` (create it before using `mkdir`) and save the results using the right extension (`.sam`).
+hint: use `hisat --help` and look for -p -U -x flags and tt the end of the command use `>` to save the resuls to a file. 
 
 
-# 5. Gene quantification
+## 4.3 FeatureCounts
 
+Finnaly to count the number of reads we will use FeatureCounts 
 
-# 6. Workflow mannager
+# 5. Introduction to repordusible bioinformatics
+
+We
 
 
 
@@ -314,430 +310,6 @@ hint: use `hisat --help` and look for -p -U -x -S flags.
 
 
 
-
-
-
-
-
-
-
------------------------OLD FILE------------------------------------
-
-
-
-
-
-
-
-```{r}
-library(data.table)
-library(readr)
-library(ggplot2)
-library(RUVSeq)
-library(RColorBrewer)
-
-```
-
-
-# Indroduction
-
-
-
-The objetive of this session is to learn the essential bioinformatics concepts of RNA-seq analysis. We are goint to use high-performace data analysis tools to process data comming from fruit fly brains. The data have been recently published on [SRA](https://trace.ncbi.nlm.nih.gov/Traces/sra/?study=SRP162335) and aparently the paper have not been out yet, therefore any conclusion we do with this data can be a new discovery. EXCITING! Due to time restrictions, we only are going to work with samples corresponding to glia and neurons. These are the two principal brain componets. The questions that we are going to try to answere during this practical are:
-  1.- Is the data good quality ?
-  2.- Can we detect gene expression profile difrences beteween glia and neurons?
-  3.- Can we detect alternative splicing paters specific to neurons or glial cells?
-
-
-# Experiment desing and basic R commands
-
-
-First we are going to inspect the study Medadata. In order to load it in to this R session, you can use the following command
-
-
-
-```{r}
-
-metadata <- data.table(read_delim("SraRunTable.txt", "\t", escape_double = FALSE, trim_ws = TRUE))
-
-```
-
-
-We imported the metadata as a data.table object, which correspond to a very convenient structure to manipulate data in R. For more information visit this [link](https://www.datacamp.com/community/tutorials/data-table-cheat-sheet). For example, we can filter the metadata rows, so we only see the ones corresponding to "central neurons"
-
-
-
-```{r}
-metadata[source_name=="central neurons" , ]
-```
-
-
-We can also get explore if we have a lowly sequenced sample filtering by the `MBases` values
-
-```{r}
-metadata[MBases < 100 , ]
-```
-
-
-Or get the average Mega bases across this sample
-
-```{r}
-
-metadata[  , mean(MBases) ]
-
-```
-
-
-To explore this visualy, we can plot with ggplot2. This is one of the most popular packages to visualize data. A basic code to visualize the Mbases distribution can be run as:
-
-```{r}
-ggplot(data = metadata) +  # Frist layer - Data input
-  geom_bar(aes(x=Run, y=MBases), stat = "identity")   # second layer - type of plot and axis
-
-```
-
-
-We can rotate the text to make it more visible
-
-```{r}
-
-ggplot(data=metadata) +
-  geom_bar(aes(x=Run, y=MBases, ), stat = "identity") + 
-  theme(axis.text.x = element_text(angle = 45))  # Third layer -  visual configuration
-
-```
-
-
-In this case, we are using the `geom_bar` function. Do `?geom_bar` to have ore information about this function
-
-
-```{r}
-?geom_bar
-```
-
-
-inside `aes( )` are the variables and we can also define a variable as the colour:
-
-
-```{r}
-ggplot(data=metadata) +
-  geom_bar(aes(x=Run, y=MBases, colour=source_name), stat = "identity") + 
-  theme(axis.text.x = element_text(angle = 45))
-```
-
-But for this particular type of graph, filling the bar with one colour is more suitable
-
-```{r}
-ggplot(data=metadata) +
-  geom_bar(aes(x=Run, y=MBases, fill=source_name), stat = "identity") + 
-  theme(axis.text.x = element_text(angle = 45))
-```
-
-
-### Beginer's challenge
-
-Do the same type of plot than above, but use `MBytes` instead. 
-
-
-
-
-# Quality Control (QC)
-
-
-To perform a QC of the Fastq files we can use *FastQC*. We can access to a basic manual of this tool by typing on `fastqc --help` on terminal, or by runing the next *bash* chunck
-
-
-```{bash}
-
-fastqc --help
-
-```
-
-
-Let's create a directory to do a GC analysis of the data
-
-
-```{bash}
-
-mkdir QC
-
-```
-
-
-### Challenge
-
-Run fastqc for `FASTQ/SRR7889584.fastq.gz` and store the resutls at the newly created folder.
-Open the obtained html output with a internet browser (Chrome, firefox, etc)
-
-### Questions
-
-What is the read leght?
-Does the quality score very throught the read lenght?
-How is the data quality?
-
-
-
-
-# Mapping read to the genome
-
-
-
-After we have a diagnosis of the data quality, we can start to analyse the data. Usually the first step into the analysis requires mapping the RNA-seq reads to the genome. There are nomerous tools to do perform short read aligment and the choice of it shoud be carefolly made accordint ot the analysis goals and requirements. Hisat2 is a very fastq tool that have been shown to have a good performace on published benchmars. 
-
-To start mapping RNA-seq reads to the genome, we need to index the genome. The command to do this is `hisat2-build`. 
-
-
-## Genome indexing 
-
-
-```{bash}
-hisat2-build --help
-```
-
-
-On the comand-line execute (you need to be at the Course_materials folder)
-
-```{bash}
-
-hisat2-build -p 5 Genome/dm6.fa Genome/Index/dm6
-
-```
-
-
-This command will use the genome (located at `Genome/dm6.fa`) and it will generate the index files on `Genome/Index/`. All the files will start with `dm6` prefix
-
-
-## Mapping reads to the genome
-
-
-To map the reads to the genome we need to run hisat2. Take a quick look to hisat2's description
-
-```{bash}
-hisat2 --help
-
-```
-
-### Challegne
-
-Run hista2 for the smallest file, SRR7889582.fastq, located at FASTQ folder using 5 proccesors. Save the results inside a folder named `hisat2` (create it with mkdir), under the file name of hisat2/SRR7889582.sam
-hint: Use -p -U -x -S flags
-
-
-# Lets RUN them all!!!!
-
-We have a master script called 'snakemake'. Go to the course_material directory on the comand-line and run:
-
-
-```{bash}
-
-#Reduce the number of cores if your machine does not have this many available 
-
-snakemake featureCounts/TOTAL.gene_count.txt --cores 7
-
-```
-
-
-This script will paralelize all the processes for the other files and it will generate a gene count file (`featureCounts/TOTAL.gene_count.txt`) which is the output of featureCounts. We will explain this on more detail.
-
-# Diferential expression analysis
-
-
-There are serveral methods to perform differential gene expression analysis. Today we are going to use Deseq2, one of the most widely used methods for assessing changes on gene expression. The first step is to import the output of *featureCounts* as *data.table* object. 
-
-
-### Challenge
-
-
-Use the *Import Dataset* button at the top-right corner and select *from CSV*. Use de *Browse* button to get to the file path. Look for the `TOTAL.gene_count.txt` file inside `featureCounts` folder. Use `#` as Quotes and select the appropriated delimiter. Make sure than the preview looks like a table and then clic import. 
-
-
-
-```{r}
-
-### Solution ###
-
-
-TOTAL_gene_count <- read_delim("featureCounts/TOTAL.gene_count.txt", 
-    "\t", escape_double = FALSE, comment = "#", 
-    trim_ws = TRUE)
-
-
-
-```
-
-
-Now we have the featureCount's output as an object in R, we can visualize it on the cell bellow.
-
-
-```{r}
-TOTAL_gene_count
-```
-
-###Questions
-
-Why do we have repeated values for `Chr` and `Start`?
-How many genes do we have in the analysis? hint: use `dim()` or `nrow()`
-
-
-## Data exploration
-
-To continue with the analysis we first need to adapt the format of our *gene count matrix*. The following code will generate an data.table object called `cts`. This format will allow us to run Deseq2, one of the most widely used programs to perform differential gene expression analyses. For more information read Deseq2 [manual](https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html). Part of the downstream code were based on "Count matrix input" and "Differential expression analysis" sections.
-
-```{r}
-
-TOTAL_gene_count <- data.frame(TOTAL_gene_count) 
-
-cts <- TOTAL_gene_count[ ,7:ncol(TOTAL_gene_count)]
-colnames(cts) <- substring(names(cts), 8,17)
-rownames(cts) <- TOTAL_gene_count$Geneid
-
-coldata <- data.frame( condition = metadata$source_name, row.names = metadata$Run )
-
-cts <- cts[, rownames(coldata)]
-```
-
-###Question
-
-What are the differences between `TOTAL_gene_count` and `cts`?
-What kind of information does `coldata` contain? Why do we need that to perform differential gene expression analysis?
-
-
-
-## Principal component analysis
-
-
-We are going to use principal compoent analysis (PCA) to have an overview of the sample differeces. If you are not familiar with PCA and you have headphones, you can watch this [video]("https://www.youtube.com/watch?v=HMOI_lkzW08"). For making the PCA, we are going to use a function of the `RUVSeq` package ; `plotPCA`,  which requires us to store our data on a `newSeqExpressionSet` object. Do not worry if you don't understand the code, let just focus on the output plot for now ! 
-
-
-```{r}
-
-
-
-colors <- brewer.pal(3, "Set2")
-set <- newSeqExpressionSet(as.matrix(cts),
-                             phenoData = coldata )
-plotPCA(set, col=colors[coldata$condition], cex=1.2)  
-
-```
-
-
-### Questions
-
-What is the main conclusion of our PCA? 
-Do we have consistent differences on gene expression profiles in between glia and neurons?
-What does PC1 represents?
-Which cell type has more transcriptional variability?
-
-
-## Running Deseq2 
-
-
-To run `Deseq2` we nee to store our gene expresion data on a `DESeqDataSetFromMatrix` object. 
-
-```{r}
-library(DESeq2)
-
-dds <- DESeqDataSetFromMatrix(countData = cts,
-                              colData = coldata,
-                              design = ~ condition)
-
-```
-
-
-We are now ready to run Deseq2!
-
-```{r}
-dds <- DESeq(dds)
-```
-
-The `dds` object store many different type of output infromation. To extract the main result table, we need to use `results()` fucntion. Then we can convert the output table into a data.table object, which is convenient to futher data exploration.
-
-```{r}
-res <- results(dds)
-restable <- data.frame(res)
-restable$GeneID <- rownames(restable)
-restable <- data.table(restable)
-restable
-```
-
-### Question
-
-Why do we have missing values?
-
-## Signigicant genes
-
-Using the function `order()` we can sort genes by their corrected pvalue (`padj`)
-
-```{r}
-restable[order(padj)]
-
-```
-
-The genes with smaller `padj` trend to have biger differences (`log2FoldChange`). We can define as significant the genes that `padj>0.05`. We can define a new column (`sig`) to classify by this criterium. 
-
-
-```{r}
-restable <- restable[!is.na(padj), ]   # Removing missing p-values (when there are not enough counts, padj cannot be estimated)
-
-restable[ padj<0.05 , sig:=TRUE ]
-restable[ padj>0.05 , sig:=FALSE ]
-```
-
-
-In order to see the results, we can do a *vulcano plot*, which correspond to log2FoldChange vs -log(padj). To see if our significant criterium is acceptable, we are going to colour significant genes on red. 
-
-```{r}
-
-
-
-ggplot(data=restable) +
-  geom_point(aes(x=log2FoldChange, y=-log(padj), colour=sig ))
-```
-
-Ooops! By default, ggplot2 plot FALSE as red.   
-TIP: To actually plot the significant genes in red, we need to swap the factors
-
-
-
-```{r}
-
-
-restable$sig <- factor(restable$sig , levels = c(TRUE, FALSE) ) # swapping factors
-
-ggplot(data=restable) +
-  geom_point(aes(x=log2FoldChange, y=-log(padj), colour=sig ))
-```
-
-
-```{r}
-restable
-```
-
-
-But, eventhough some genes has a significant padj, only genes with a big absulute log2FoldChange will be biologically meaningful. Thus, we should redifine our significanse condition to be limmited only to genes which has an absolute log2FoldChange value greater than 1. 
-
-### Challenge 
-
-A) Re-define `sig` column to match our new criterium. How many significant genes do we have under this criterium? generate the vulcano plot
-Hint: use `padj<0.05 & abs(log2FoldChange)>=1` as new condition and generate. 
-
-B) Generate an MA plot ( x=log2(baseMean) ; y=log2FoldChange).Does the signidicant genes distribute uniformely across x-axis? 
-
-
-```{r}
-
-### Solution  ##
-
-ggplot(data=restable) +
-  geom_point(aes(x=log2(baseMean), y=log2FoldChange, colour=sig ))
-
-```
-
-
-###  Bonus Challenge! 
-
-(leave this for the end)
-Re-do the analysis but exclude the sample with fewer reads. Low depth samples might interfere with the analysis. 
 
 
 
