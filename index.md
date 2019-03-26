@@ -47,9 +47,9 @@ _Day 1_
 
 12:30 - 13:30 Lunch
 
-13:30 - 16:00 [Practical: Mapping reads to the genome and getting raw counts ](slides/DAY_1.pdf#page=11)
+13:30 - 16:00 [Practical: Mapping reads to the genome and getting raw counts ](Course_Materials/00_Reproducible_RNA-Seq_Processing/Day1.html)
 
-16:00 - 17:30 [Practical: Introduction to reporducible bioinformatics ](slides/DAY_1.pdf#page=11)
+16:00 - 17:30 [Practical: Introduction to reporducible bioinformatics ](Course_Materials/00_Reproducible_RNA-Seq_Processing/Day1.html)
 - [Solutions for Day 1 practical](Course_Materials/solutions/00_Reproducible_RNA-seq_Processing.txt)
 
 _Day 2_
