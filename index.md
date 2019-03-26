@@ -41,21 +41,24 @@ _Day 1_
 
 9:30 - 10:15 - [Introduction to RNAseq Methods](slides/Day1_Intro_Lecture.pptx) - Ashley Sawle
 
-10:15 - 11:00 - [Introduction to Alignment and Quantification](slides/Day1_Lecture.pptx) - Guillermo Parada Gonzalez
+10:15 - 10:45 - [Introduction to Alignment and Quantification](slides/Day1_Lecture.pptx) - Guillermo Parada Gonzalez
 
-11:00 - 12:30 [Practical: QC and Alignment with HISAT2](slides/DAY_1.pdf)
+10:30 - 12:30 [Practical: Basic Unix, input file formats and quality control](slides/DAY_1.pdf)
 - [Dropbox with full materials for Part 1 of the course including data files](https://www.dropbox.com/sh/rb03yhfqixvbcn5/AADqyJXECPbcZdyIUXw6yQEia?dl=0)
 
 12:30 - 13:30 Lunch
 
-13:30 - 17:30 [Practical: Transcriptome assembly and quantificatioin with stringtie](slides/DAY_1.pdf#page=11)
+13:30 - 16:00 [Practical: Mapping reads to the genome and getting raw counts ](slides/DAY_1.pdf#page=11)
+- [Solutions for Day 1 practical](slides/DAY1answers.txt)
+
+16:00 - 17:30 [Practical: Introduction to reporducible bioinformatics ](slides/DAY_1.pdf#page=11)
 - [Solutions for Day 1 practical](slides/DAY1answers.txt)
 
 _Day 2_
 
-9:30 - 10:30 [Normalisation; Quasi-mapping and quantification with Salmon](slides/Day2_Lecture.pptx) - Guillermo Parada Gonzalez 
+9:30 - 11:00 [Practical: Guided transcriptome assembly using StringTie](slides/Day2_Lecture.pptx) - Guillermo Parada Gonzalez 
 
-10:30 - 12:30 [Practical: Mapping and quantification with Star; Quantification with Salmon](slides/DAY_2.pdf)
+11:00 - 12:30 [Practical: Alternative splicing analysis using Whippet ](slides/DAY_2.pdf)
 - [Solutions for Day 2 practical](slides/DAY2answers.txt)
 
 12:30 - 13:30 - Lunch
