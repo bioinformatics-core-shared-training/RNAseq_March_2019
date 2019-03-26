@@ -403,32 +403,6 @@ Execute `snakemake` to quantify all the samples using featureCounts. Look inside
 
 
 
-----------------------------Day two-------------------------------------------
-
-
-
-
-
-# Genomebrowser visualization
-
-
-# Transcriptome Assembly
-
-
-# 9. Aligment-free quantification (Salmon)
-
-```{r}
-#<img src="Images/TAB.png" width="100" style="float": "right"> 
-```
-
-
-
-
-
-
-
-
-
 
 
 
