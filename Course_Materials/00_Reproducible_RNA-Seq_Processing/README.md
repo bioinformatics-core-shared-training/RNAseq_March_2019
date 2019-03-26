@@ -10,7 +10,7 @@ Clone the course repository:
 
 Create a conda enviroment with snakemake installed on it. We can call this virtual enviroment `snakemake_env`, but any other name would also work.
 
-    conda create -n snakemake_env snakemake julia=0.6.1   
+    conda create -n snakemake_env snakemake   
 
 Activate conda enviroment:
     
