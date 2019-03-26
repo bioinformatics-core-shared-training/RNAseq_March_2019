@@ -54,6 +54,8 @@ rule bamstats:
         stats_html = "QC/{sample}.plots.html"
     params:
         "QC/{sample}.plots"
+    conda:
+        "envs/core.yaml"
     shell:
         "samtools stats {input} > {output.stats_txt} && plot-bamstats -p {params} {output.stats_txt} "
     
