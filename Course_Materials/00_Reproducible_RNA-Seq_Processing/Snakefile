@@ -47,7 +47,7 @@ rule samTobam:
         "samtools view -b  {input}  | samtools sort - -o {output} && samtools index {output} 2> {log}"
         
 rule bamstats:
-    in:
+    input:
         "hisat2/{sample}.sorted.bam"
     out:
         stats_txt = "QC/{sample}.stats"
