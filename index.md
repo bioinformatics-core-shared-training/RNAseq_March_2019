@@ -56,9 +56,11 @@ _Day 1_
 
 _Day 2_
 
-9:30 - 11:00 [Practical: Guided transcriptome assembly using StringTie](slides/Day2_Lecture.pptx) - Guillermo Parada Gonzalez 
+9:30 - 11:00 [Lecuture: Transcriptome assembly and alternative splicing analysis](slides/Day2_Lecture.pptx) - Guillermo Parada Gonzalez 
 
-11:00 - 12:30 [Practical: Alternative splicing analysis using Whippet ](slides/DAY_2.pdf)
+10:00 - 11:15 [Practical: Guided transcriptome assembly using StringTie](slides/Day2_Lecture.pptx)
+
+11:15 - 12:30 [Practical: Alternative splicing analysis using Whippet ](slides/DAY_2.pdf)
 - [Solutions for Day 2 practical](slides/DAY2answers.txt)
 
 12:30 - 13:30 - Lunch
