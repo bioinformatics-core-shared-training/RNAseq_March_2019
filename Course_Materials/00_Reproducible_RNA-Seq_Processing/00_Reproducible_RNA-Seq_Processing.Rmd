@@ -278,7 +278,42 @@ Run hisat2 for the smallest file, located at FASTQ folder using 7 proccesors. Sa
 hint: use `hisat --help` and look for -p -U -x flags and tt the end of the command use `>` to save the resuls to a file. 
 
 
-## 4.3 FeatureCounts
+## 4.3 Samtools
+
+The output of hisat2 is a SAM file, which is a plain text file that has the alignment information. As they tend to be very large, is not a good idea to store them forever. BAM files are the binary form of SAM files, which means their information is much more compressed, which make them easier to store them, but also enable quicker processing of their data. We can transform from SAM to BAM following this general formula:
+
+`samtools view -b sample.sam > sample.bam`
+
+Where `sample` is just a generic name to reffer to our samples. 
+
+**Exercise 4.3.1**
+
+Get a BAM file from the SAM file you just generated. 
+
+
+## 4.4 Visualise BAM files
+
+BAMs can be used for different downstream analyses. But most of them require the BAM files to be `sorted`. When a BAM file is sorted, the alignments are ordered by the position they map to. BAM files can be sorted using `samtools sort` and following this formula:
+
+`samtools sort  sample.bam -o sample.sorted.bam`
+
+To visualise a BAM's alignment, we need to index it first. Which can be made with `samtools index`:
+
+`samtools index sample.sorted.bam`
+
+**Exercise 4.4.1**
+
+A) Sort and Index your BAM file.
+B) Open IGV, load D. melanogaster's genome (dm6) and load the sorted bamfile.
+
+**IGV help**
+
+*Load the reference genome*. On the top menu bar find the genomes dropdown (top-left) and  then find  `D. melanogaster` assembly dm6. You might need to click on ‘More...’ to see a list of available genomes.
+
+*Load the BAM file*. On the top menu bar go to ‘File –> Load from File...’ and select the sorted BAM file you have created on the previous step.  
+
+
+## 4.5 FeatureCounts
 
 To count the number of reads we will use FeatureCounts, which uses a gene annotation file (GTF) to process the genomic intervals of every gene and count all the reads that map to the exonic regions. 
 
@@ -291,7 +326,26 @@ Run featureCounts providing the transcript annotation and the same file you prod
 Find the gene with the highest number of counts. Can we say this gene is the one with higher expression levels on this sample?
 
 
-# 5. Introduction to repordusible bioinformatics
+# 5. Introduction to reporducible bioinformatics
+
+Until this point, we have introduced every command mannually in the terminal. Please check how many files do we have at `FASTQ/`. Do you think you can get the raw counts from all the samples without having errors? what about processing hundred of samples, is it reasonable to do it manually?  
+
+The answer is clearly *no*. We need systematic ways to process data to avoid errors and enable reproducibility in our analyses. This is why we are going to use a workflow manager to execute the remaining steps to get the raw counts from our samples. 
+
+Snakemake is currently one most popular workflow managers to work with bioinformatic software. To install snakemake please the following command:
+
+`conda create -n snakemake_env snakemake `
+
+By doing this we created a virtual environment, called `snakemake_env` that has latest version of snakemake and our it dependencies installed. Now to activate this environment, write:
+
+`conda activate snakemake_env`
+
+As we already wrote a `snakemake` pipeline for you, we are going to demonstrate you some of its properties and how to use it.
+
+
+# 5.1 Quantifying all the samples at once
+
+
 
 
 
