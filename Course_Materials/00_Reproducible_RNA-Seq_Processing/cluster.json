@@ -16,13 +16,13 @@
 
     "hisat2_Genome_index" :
     {
-        "nCPUs"     : 5
+        "nCPUs"     : 7
     },
 
 
     "hisat2_to_Genome" :
     {
-        "nCPUs"     : 5
+        "nCPUs"     : 3
     }
 
 
