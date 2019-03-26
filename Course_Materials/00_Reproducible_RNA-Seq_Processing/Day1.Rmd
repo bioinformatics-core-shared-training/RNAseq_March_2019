@@ -1,5 +1,5 @@
 ---
-title: " Reproducible RNA-seq Proceessing "
+title: " Reproducible RNA-seq Proceessing - Day1 "
 output: html_notebook
 ---
 
@@ -394,19 +394,3 @@ Finally, to run these steps we need to enable snakemake to use the environment f
 
 Execute `snakemake` to quantify all the samples using featureCounts. Look inside `Snakefile`code to see where the final output of featureCount will be stored and compare it with the output we previously had using featureCounts.  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Sys.setenv(PATH='/Users/gp7/miniconda2/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Library/TeX/texbin:/usr/local/munki:/opt/X11/bin:/usr/local/git/bin')
