@@ -18,7 +18,7 @@ rule hisat2_Genome_index:  #This is a rule and represent the first step of mappi
     log:
         "logs/hisat2_Genome_index.log"
     shell:
-        "hisat2-build -p 7 {input} Genome/Index/dm6 2> {log}"
+        "hisat2-build -p {threads} {input} Genome/Index/dm6 2> {log}"
 
 rule hisat2_to_Genome:
     input:
