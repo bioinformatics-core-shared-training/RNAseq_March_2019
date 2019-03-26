@@ -50,7 +50,7 @@ rule bamstats:
     input:
         "hisat2/{sample}.sorted.bam"
     output:
-        stats_txt = "QC/{sample}.stats"
+        stats_txt = "QC/{sample}.stats",
         stats_html = "QC/{sample}.plots.html"
     params:
         "QC/{sample}.plots"
