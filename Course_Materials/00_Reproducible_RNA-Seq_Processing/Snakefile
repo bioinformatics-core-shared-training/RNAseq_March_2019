@@ -49,7 +49,7 @@ rule samTobam:
 rule bamstats:
     input:
         "hisat2/{sample}.sorted.bam"
-    out:
+    output:
         stats_txt = "QC/{sample}.stats"
         stats_html = "QC/{sample}.plots.html"
     params:
