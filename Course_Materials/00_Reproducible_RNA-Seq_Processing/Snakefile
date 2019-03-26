@@ -45,6 +45,18 @@ rule samTobam:
         "logs/samTobam.{sample}.log"
     shell:
         "samtools view -b  {input}  | samtools sort - -o {output} && samtools index {output} 2> {log}"
+        
+rule bamstats:
+    in:
+        "hisat2/{sample}.sorted.bam"
+    out:
+        stats_txt = "QC/{sample}.stats"
+        stats_html = "QC/{sample}.plots.html"
+    params:
+        "QC/{sample}.plots"
+    shell:
+        "samtools stats {intput} > {out.stats_txt} && plot-bamstats -p {params} {out.stats_txt} "
+    
 
 rule featureCounts:
     input:
