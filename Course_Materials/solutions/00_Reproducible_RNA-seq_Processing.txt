@@ -69,7 +69,12 @@ sort -nr -k 10 dm6.Ensembl.genes.bed12 | head -n 5
 2.3.3
 
 # N.B. This should have read "CDS" not "gene", sorry
+
+# 'cut' allows us to cut out a particular column - the default is to assume that columns are separated by tabs
 cut -f 3 dm6.Ensembl.genes.gtf | grep CDS | wc -l
+>17737
+
+# An alternative method using the 'awk' programme
 awk '$3=="CDS"' dm6.Ensembl.genes.gtf | wc -l
 >17737
 
