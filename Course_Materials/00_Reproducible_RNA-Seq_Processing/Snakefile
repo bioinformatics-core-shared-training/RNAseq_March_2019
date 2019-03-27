@@ -25,14 +25,12 @@ rule hisat2_to_Genome:
         fastq = "FASTQ/{sample}.fastq.gz",
         genome = "Genome/Index/dm6.1.ht2"
     output:
-        "hisat2/{sample}.sam"
+        temp("hisat2/{sample}.sam")
     threads: 3
     conda:
         "envs/core.yaml"
-    log:
-        "logs/hisat2_to_Genome.{sample}.log"
     shell:
-        "hisat2 -p 3 -U {input.fastq} -x  Genome/Index/dm6  > {output} 2> {log}"
+        "hisat2 -p 3 -U {input.fastq} -x  Genome/Index/dm6  > {output} "
 
 rule samTobam:
     input:
@@ -41,10 +39,8 @@ rule samTobam:
         "hisat2/{sample}.sorted.bam"
     conda:
         "envs/core.yaml"
-    log:
-        "logs/samTobam.{sample}.log"
     shell:
-        "samtools view -b  {input}  | samtools sort - -o {output} && samtools index {output} 2> {log}"
+        "samtools view -b  {input}  | samtools sort - -o {output} && samtools index {output} "
         
 rule bamstats:
     input:
