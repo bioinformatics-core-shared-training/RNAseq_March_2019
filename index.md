@@ -39,7 +39,7 @@ here for you.
 
 _Day 1_
 
-9:30 - 10:15 - [Introduction to RNAseq Methods](slides/Day1_Intro_Lecture.pptx) - Ashley Sawle
+9:30 - 10:15 - [Introduction to RNAseq Methods](html/Introduction_to_RNAseq_Methods.html) - Ashley Sawle
 
 10:15 - 10:45 - [Introduction to Alignment and Quantification](slides/Day1_Lecture.pptx) - Guillermo Parada Gonzalez
 
