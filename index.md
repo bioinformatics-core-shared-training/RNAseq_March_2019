@@ -43,13 +43,13 @@ _Day 1_
 
 10:15 - 10:45 - [Introduction to Alignment and Quantification](slides/Day1_Lecture.pptx) - Guillermo Parada Gonzalez
 
-10:30 - 12:30 [Practical: Basic Unix, input file formats and quality control](Course_Materials/00_Reproducible_RNA-Seq_Processing/Day1.html)
+10:30 - 12:30 [Practical: Basic Unix, input file formats and quality control](Course_Materials/00_Reproducible_RNA-Seq_Processing/Day1.nb.html)
 
 12:30 - 13:30 Lunch
 
-13:30 - 16:00 [Practical: Mapping reads to the genome and getting raw counts ](Course_Materials/00_Reproducible_RNA-Seq_Processing/Day1.html)
+13:30 - 16:00 [Practical: Mapping reads to the genome and getting raw counts ](Course_Materials/00_Reproducible_RNA-Seq_Processing/Day1.nb.html)
 
-16:00 - 17:30 [Practical: Introduction to reporducible bioinformatics ](Course_Materials/00_Reproducible_RNA-Seq_Processing/Day1.html)
+16:00 - 17:30 [Practical: Introduction to reporducible bioinformatics ](Course_Materials/00_Reproducible_RNA-Seq_Processing/Day1.nb.html)
 - [Solutions for Day 1 practical](Course_Materials/solutions/00_Reproducible_RNA-seq_Processing.txt)
 
 _Day 2_
