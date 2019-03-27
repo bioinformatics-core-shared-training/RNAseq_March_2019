@@ -75,6 +75,41 @@ awk '$3=="CDS"' dm6.Ensembl.genes.gtf | wc -l
 
 3.1.1
 
+# Create directory
+mkdir QC
+# Run FASTQC
+fastqc -o QC -t 7 FASTQ/SRR7889585.fastq.gz
+
+4.1.1
+
+mkdir -p Genome/Index
+hisat2-build -p 7 Genome/dm6.fa Genome/Index/dm6
+
+# This should create 8 dm6.X.ht2 files
+
+4.2.1 
+
+hisat2 -x Genome/Index/dm6 -U FASTQ/SRR7889582.fastq.gz -p 7 > hisat2/SRR7889582.sam
+
+4.3.1
+
+samtools view -bH hisat2/SRR7889582.sam > hisat2/SRR7889582.bam
+
+4.4.1
+
+samtools sort hisat2/SRR7889582.bam > hisat2/SRR7889582.sorted.bam
+samtools index hisat2/SRR7889582.sorted.bam
+
+4.5.1
+
+featureCounts -a Gene_annotation/dm6.Ensembl.genes.gtf -o hisat2/SRR7889582.featuresCounts hisat2/SRR7889582.sorted.bam 
+
+4.5.2
+
+sort -nrk 7 hisat2/SRR7889582.featuresCounts | head -n 1
+> FBtr0081639	chr3R;chr3R	7086599;7087234	7086744;7088839	+;+	1752	4530
+
+
 
 
 
