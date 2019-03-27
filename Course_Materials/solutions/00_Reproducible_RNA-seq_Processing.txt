@@ -1,7 +1,26 @@
-Answeres
+Answers
+
+1.0.1
+
+mkdir test_folder
+# to find the smallest file in the FASTQ directory:
+ls -lh FASTQ/
+# copy the samllest file
+cp FASTQ/SRR7889582.fastq.gz test_folder/.
+# change the folder name (use mv, which is "move")
+mv test_folder to_delete
+# to remove the folder - '-r' for "recursive" and '-f' for "force":
+rm -rf to_delete
 
 1.2.1
 
+# To access the manual:
+man head
+# use 'q' to exit
+
+# head to get the top 'n' lines
+# grep to search a file for lines containin a particular pattern of characters
+# wc ('word count') to count, '-l' to only count lines
 head -n 100 dm6.Ensembl.genes.gtf | grep CDS | wc -l
 >35
 
@@ -12,18 +31,51 @@ grep ^\> Genome/dm6.fa | wc -l
 
 2.1.2
 
+# with grep '-v' returns the 'inverse' i.e. lines NOT containing the pattern
+# '-m' with wc to count characters
 grep -v ^\> Genome/dm6.fa | wc -m
 >146601461
 
+2.2.1
+
+# use ls -l to list the files sizes, the smallest has the least reads and the largest has the most
+# use '-S' to sort by size
+ls -lS FASTQ
+
+# Count reads by looking for the first line of each read entry using @SRR788
+# Use '-c' with grep to count matching lines 
+# use zcat to read the zipped (.gz) fastq files then pipe to grep
+zcat FASTQ/SRR7889582.fastq.gz | grep -c @SRR7889
+>1505731
+zcat FASTQ/SRR7889581.fastq.gz | grep -c @SRR7889
+>18381890
+
+# To get the read length we could get the first read sequence from the second line of the file and count the characters
+# 'tail' is the opposite of 'head'
+zcat FASTQ/SRR7889581.fastq.gz | head -n 2 | tail -n 1 | wc -m
+
+2.3.1 
+
+# Done on the UCSC table browser
+
 2.3.2
 
+# "sort" reorders a file. The default is alphabetically by line.
+# '-k 10' - sort on 10th column
+# '-n ' sort numerically
+# '-r' sort reverse (high to low)
 sort -nr -k 10 dm6.Ensembl.genes.bed12 | head -n 5
 
 2.3.3
 
-cut -f 3 dm6.Ensembl.genes.gtf | grep gene | wc -l
-awk '$3=="gene"' dm6.Ensembl.genes.gtf | wc -l
+# N.B. This should have read "CDS" not "gene", sorry
+cut -f 3 dm6.Ensembl.genes.gtf | grep CDS | wc -l
+awk '$3=="CDS"' dm6.Ensembl.genes.gtf | wc -l
 >17737
+
+3.1.1
+
+
 
 
 
