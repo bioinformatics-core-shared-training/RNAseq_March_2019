@@ -54,7 +54,7 @@ _Day 1_
 
 _Day 2_
 
-9:30 - 11:00 [Lecuture: Transcriptome assembly and alternative splicing analysis](slides/Day2_Lecture.pptx) - Guillermo Parada Gonzalez 
+9:30 - 10:00 [Lecuture: Transcriptome assembly and alternative splicing analysis](slides/Day2_Lecture.pptx) - Guillermo Parada Gonzalez 
 
 10:00 - 11:15 [Practical: Guided transcriptome assembly using StringTie](slides/Day2_Lecture.pptx)
 
