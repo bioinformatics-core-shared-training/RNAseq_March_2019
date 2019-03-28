@@ -116,3 +116,26 @@ To visualize the stepts we are going to run we can plot the DAG using `whippet_d
 As this section might take a while, please run leave it running meanwhile we give you more details about Whippet:
 
 `snakemake whippet_delta --use-conda --cores 7`
+
+
+Whippet is a lightweight and fast program to perform alternative splicing analyses. Instead of mapping the reads to the genome, whippet is directly quantifying the genes, transcripts and splicing nodes by indexing the transcriptome. In this case, we providing to whippet the extended annotation that we got using StrigTie. To quantify splicing whippet define splicing nodes from the annotation and build a Contiguous Splice Graph (CSG):
+
+![](https://camo.githubusercontent.com/a5c2def3e052ab5b5fcdebe643c76f80a2a41ade/68747470733a2f2f74696d6269747a2e6769746875622e696f2f696d616765732f576869707065742d466967312e676966) 
+
+This allows whippet to have a fast quantification at the event level. The indexing process is carried out by executing `whippet-index.jl` which in this case is the most time-consuming step. Then, we run `whippet-quant.jl` quantify the splicing nodes, which also at the same time quantifies gene and isoforms. And finally, `whippet-delta.jl` allow us to assess which exons are differentially included between two conditions. In our case, we grouped the samples by cell-type of origin, so we can assess alternative splicing between central neurons and glia. 
+
+** Exercise 3.1.1**
+
+Following the indications from the authors, we deduced that we should use the following command to extract the significant changes from the final output:
+
+`zcat Delta/neuron_vs_glia_new.diff.gz  | awk '($8>0.1||$8<0.1) && $9>=0.9'`
+
+By looking at [Whippet documentation](https://github.com/timbitz/Whippet.jl), can you make sense to this command? (hint `awk` is being used to filter columns, where `||` is interpreted as `or` and `&&` as `and`)
+
+** Exercise 3.1.2**
+
+Which is the most frequent type of alternative splicing node?
+
+** Bonus Track **
+
+Explore the results using IGV. For this load all (or some) the sorted BAMs and the transcript annotations that we generated. For simplicity, you can start searching the coordinates of **cassette exons** (CE)  that were detected as differentially included by whippet between central neurons and glia.
