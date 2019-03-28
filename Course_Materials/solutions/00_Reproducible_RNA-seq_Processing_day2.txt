@@ -1,0 +1,57 @@
+Soloutions Day 2:
+
+
+2.1.1
+
+awk '$3=="transcript"' SRR7889582.assemble.gtf | wc -l
+>5019
+
+awk '$3=="transcript"' SRR7889581.assemble.gtf | wc -l
+>15378
+
+awk '$3=="transcript"' merged.assemble.gtf | wc -l
+>23550
+
+
+2.1.2
+
+awk '$4=="u"' gffcompare.tracking | wc -l
+>2083
+
+
+2.1.3
+
+Do
+grep '"u"' gffcompare.annotated.gtf | head
+And use the coordinates of some unannotated transcripts to explore them at IGV
+
+
+2.2.1
+
+awk '$3=="transcript"' gffcompare.annotated.filtered.gtf |   wc -l
+>3497
+grep '"u"' gffcompare.annotated.filtered.gtf | wc -l
+>39
+
+
+3.1.1
+
+From Whippet's github:
+"In general, significant nodes should have a higher probability (e.g. >=0.90) suggesting there is likely to be a difference between the samples, and (2) significant nodes should have an absolute magnitude of change (|DeltaPsi| > x) where x is some value you consider to be a biologically relevant magnitude of change (we suggest |DeltaPsi| > 0.1)."
+
+3.1.2
+
+zcat Delta/neuron_vs_glia_new.diff.gz  | awk '($8>0.1||$8<0.1) && $9>=0.9' | cut -f 5 | sort | uniq -c
+     12 AA
+     21 AD
+      8 AF
+      4 AL
+    107 CE
+     42 RI
+     86 TE
+     69 TS
+     1 Type
+Thus, CE (cassette exons) are the most common type of alternative node between these conditions.
+
+
+

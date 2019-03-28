@@ -2,3 +2,146 @@
 title: " Reproducible RNA-seq Proceessing - Day2 "
 output: html_notebook
 ---
+
+# 1. Connecting snakemake workflows  
+
+Yesterday we got a taste of the power of snakemake to conduct bioinformatics analyses. Today we are going to see how our `Snakefile` can be connected other downstream workflows modules. 
+
+The statement that allows integration of additional modules to our snakemake is `include`. Open the `Snakefile` you will see that at the very beginning there is an include statement that connects it with `rules/00_download_data.skm`, which correspond to a snakemake module that was run to download all the data from this course:
+
+```{python}
+include: "rules/00_download_data.skm"
+``` 
+
+Use `Atom` (or any text editor) to open `rules/00_download_data.skm` file and take a look its code. You will see that the code start with some python code and the is followed up by some snakemake rules. This is possible because of Snakemake uses python as a background, so any python syntax works. The first part of the code tries to create some folders (`FASTQ/`, `download/` and `logs/`). Then between lines 20-52, the scripts to download the samples are generated at `download/` folder. At the same time `SAMPLES` object is created, and stores all the accession codes from `NCBI_accession_list.txt`. Thus, after these lines, SAMPLES correspond to a standard (python list)[https://www.programiz.com/python-programming/list] with the accession codes inside.
+
+**Exercise 1.1**
+
+As we have already downloaded all the data, we can disconnect `rules/00_download_data.skm` module from our `Snakefile`. To do this *comment* the first include statement by adding a `#` character at the first include statement, this will inactivate this line. Then on the second Snakefile's line , create a list named `SAMPLES` that contain the accession values from `NCBI_accession_list.txt`. You can do this by introducing the following code at the second line of the `Snakefile`:
+
+```{python}
+SAMPLES = ["SRR7889581", "SRR7889582", "SRR7889583", "SRR7889584", "SRR7889585", "SRR7889597", "SRR7889598", "SRR7889599", "SRR7889600"]
+``` 
+Next, save a new workflow visualisation in a new file and compare with the one we obtained yesterday. (Please take a look a the command to visualize the steps that is at (5.1 section)[https://bioinformatics-core-shared-training.github.io/RNAseq_March_2019/Course_Materials/00_Reproducible_RNA-Seq_Processing/Day1.nb.html]). Can you see some differences? Undo the canges before continue or just delete the `#` from the first line and add `#` at the beginning of the second) 
+
+
+*Note:* If you are interested to run this snakemake pipeline with your own samples, you can modify `SAMPLES` list and fill it with your own sample names. As long you place your own `.fastq.gz` files at `FASTQ\`, snakemake will be able to recognize your samples as input. If you want to work with a different species, you also need to modify `Snakefile` (and some files at `rules\`) to replace `Genome/dm6.fa` and  "Gene_annotation/dm6.Ensembl.genes.gtf" by your own genome and gene annotation files.
+
+
+# 2. Transcriptome Assembly:
+
+
+
+ ![](http://2.bp.blogspot.com/-J0eXeoo5Soc/TdV9n6rhvLI/AAAAAAAAuEk/hNfo7zq7oT4/s1600/Assembly.png)
+
+
+
+In addition to quantifying gene expression, RNA-Seq data can be also used to annotate new transcripts. For this purpose, the algorithm tries to assemble the reads into scaffolds by finding common sequences among the reads. There are two main strategies to do this:
+* *De novo* transcriptome assembly: Which just take input the FASTQ files and it loads them into the RAM memory to a fast exploration of the possible solutions to assemble the reads as transcripts, therefore it requires large amounts of RAM memory. It is particularly useful when no good quality genome assembly is available. 
+* Genome-guided transcriptome assembly: Which process the genomic alignments (BAM files) to assemble the transcripts. It is usually much faster and produces better results when the genome assembly is of good quality, like the ones you can find for model organisms (like *D. melanogaster*)
+
+
+**Exercise 2.1**
+
+`include: "rules/01_stringtie.skm"` connects our Snakefile with a module located at `rules/01_stringtie.skm`. Open this file and try to predict what commands are going to be executed by snakemake when we execute these rules. 
+
+# 2.1 Assembling reads into transcripts
+
+The rule `StringTie_Assemble` execute `stringtie` for each BAM file. This will produce `.assemble.gtf` files at a `StringTie\`. Then all of these gene assembly files will be merged by `StringTie_Merge` by executing `stringtie --merge` and save it at `StringTie/merged.assemble.gtf`. Finnally, `StringTie_gffcompare` we compare this merged assembly with the reference transcript annotation using `gffcompare`, this will allow us to identify novel transcripts that are not currently annotated at *D. melanogaster* transcriptome. 
+
+
+Visualize these steps by targeting this `StringTie_gffcompare ` rule and generate the DAG and transforming it to an image:
+
+`snakemake StringTie_gffcompare --dag | dot -Tpng > StringTie_Merge.png`
+
+Then look at the commands it will submit:
+
+`snakemake StringTie_gffcompare -np`
+
+Finally, run these steps:
+
+`snakemake StringTie_gffcompare --use-conda --cores 7`
+
+
+**Exercise 2.1.1**
+
+Count the number of transcripts that were produced with the BAM file from the smallest and the largest sample. Then compare these values with the total amount of transcripts that you obtained after merging all the samples (hint: use `awk '$3=="transcript"' GTF` to filter the lines of the GTF files that match with `transcript` on the third column).
+
+**Exercise 2.1.2**
+
+Look at `gffcompare\` folder and open the `gffcompare.tracking` file. The third line corresponds to a  **Transcript classification code**. Follow this [link](http://ccb.jhu.edu/software/stringtie/gffcompare.shtml#transfrag-class-codes) to interpret these codes and count the number of unknown intergenic transcripts that you assembled.
+
+**Exercise 2.1.3**
+
+Load gffcompare.annotated.gtf at `IGV` and visualize some examples of unnanotated trancripts. What do you think there is the common characteristic? 
+
+# 2.2 Filtering the assembly
+
+As you may notice, many of the new transcripts that StringTie generated with our data correspond to transcripts that only have one exon. Many of these can be false positives, thus we have coded for you a script in python (`scripts/StringTie_filter.py`) can filter this obtained assemblyes by transcript classification code and a minimum number of exons. This script is executed by `StringTie_filer` that is at `rules/02_bridge.skm`:
+
+```{python}
+ rule StringTie_filer:
+    input:
+        gtf = "gffcompare/gffcompare.annotated.gtf",
+        tracking = "gffcompare/gffcompare.tracking"
+    params:
+        min_number_of_exons = 3,
+        gffcompare_allowed_classes = "k,m,n,j,x,i,y,u"
+    output:
+        gtf_filtered = "gffcompare/gffcompare.annotated.filtered.gtf"
+    shell:
+        "python scripts/StringTie_filter.py {input} {params} > {output}"
+``` 
+    
+Where `min_number_of_exons` parameter correspond to the minimum number of exons that we allow in our filtering process. Also, as certain transcript types might not be reliable,  `gffcompare_allowed_classes` parameter is a comma-separated list of the codes that we considered reliable and that it will be in our final filtered file. Finnaly, the next rule of `02_bridge.skm` module, merges the filtered list of new transcripts with the reference transcripts.
+
+Run these steps by using:
+
+`snakemake extrend_refrence  --use-conda --cores 7`
+
+
+**Exercise 2.2.1**
+
+How many new transcripts did we get in our filtered GTF file? How many of them are intergenic?
+
+
+# 3. Alternative splicing analysis
+
+To evaluate alternative splicing, we are going to use [Whippet](https://github.com/timbitz/Whippet.jl), a newly developed tool developed in [julia](https://julialang.org/). To do this, we need to activate a virtual environment that we already prepared for you:
+
+`conda activate julia_0.6.1`
+
+This virtual environment has a version of **julia** which is compatible with **Whippet**. To see more details about how we prepared this environment, please follow this [link](https://github.com/bioinformatics-core-shared-training/RNAseq_March_2019/tree/master/Course_Materials/00_Reproducible_RNA-Seq_Processing/Whippet).
+
+To visualize the stepts we are going to run we can plot the DAG using `whippet_delta` as a target:
+
+`snakemake whippet_delta --dag | dot -Tpng > whippet_delta.png`
+
+As this section might take a while, please run leave it running meanwhile we give you more details about Whippet:
+
+`snakemake whippet_delta --use-conda --cores 7`
+
+
+Whippet is a lightweight and fast program to perform alternative splicing analyses. Instead of mapping the reads to the genome, whippet is directly quantifying the genes, transcripts and splicing nodes by indexing the transcriptome. In this case, we providing to whippet the extended annotation that we got using StrigTie. To quantify splicing whippet define splicing nodes from the annotation and build a Contiguous Splice Graph (CSG):
+
+
+![](https://camo.githubusercontent.com/a5c2def3e052ab5b5fcdebe643c76f80a2a41ade/68747470733a2f2f74696d6269747a2e6769746875622e696f2f696d616765732f576869707065742d466967312e676966) 
+
+
+This allows whippet to have a fast quantification at the event level. The indexing process is carried out by executing `whippet-index.jl` which in this case is the most time-consuming step. Then, we run `whippet-quant.jl` quantify the splicing nodes, which also at the same time quantifies gene and isoforms. And finally, `whippet-delta.jl` allow us to assess which exons are differentially included between two conditions. In our case, we grouped the samples by cell-type of origin, so we can assess alternative splicing between central neurons and glia. 
+
+**Exercise 3.1.1**
+
+Following the indications from the authors, we deduced that we should use the following command to extract the significant changes from the final output:
+
+`zcat Delta/neuron_vs_glia_new.diff.gz  | awk '($8>0.1||$8<0.1) && $9>=0.9'`
+
+By looking at [Whippet documentation](https://github.com/timbitz/Whippet.jl), can you make sense to this command? (hint `awk` is being used to filter columns, where `||` is interpreted as `or` and `&&` as `and`)
+
+**Exercise 3.1.2**
+
+Which is the most frequent type of alternative splicing node?
+
+**Bonus Track**
+
+Explore the results using IGV. For this load all (or some) the sorted BAMs and the transcript annotations that we generated. For simplicity, you can start searching the coordinates of **cassette exons** (CE)  that were detected as differentially included by whippet between central neurons and glia.

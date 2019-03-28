@@ -1,0 +1,124 @@
+Answers
+
+1.0.1
+
+mkdir test_folder
+# to find the smallest file in the FASTQ directory:
+ls -lh FASTQ/
+# copy the samllest file
+cp FASTQ/SRR7889582.fastq.gz test_folder/.
+# change the folder name (use mv, which is "move")
+mv test_folder to_delete
+# to remove the folder - '-r' for "recursive" and '-f' for "force":
+rm -rf to_delete
+
+1.2.1
+
+# To access the manual:
+man head
+# use 'q' to exit
+
+# head to get the top 'n' lines
+# grep to search a file for lines containin a particular pattern of characters
+# wc ('word count') to count, '-l' to only count lines
+head -n 100 dm6.Ensembl.genes.gtf | grep CDS | wc -l
+>35
+
+2.1.1
+
+grep ^\> Genome/dm6.fa | wc -l
+>1870
+
+2.1.2
+
+# with grep '-v' returns the 'inverse' i.e. lines NOT containing the pattern
+# '-m' with wc to count characters
+grep -v ^\> Genome/dm6.fa | wc -m
+>146601461
+
+2.2.1
+
+# use ls -l to list the files sizes, the smallest has the least reads and the largest has the most
+# use '-S' to sort by size
+ls -lS FASTQ
+
+# Count reads by looking for the first line of each read entry using @SRR788
+# Use '-c' with grep to count matching lines 
+# use zcat to read the zipped (.gz) fastq files then pipe to grep
+zcat FASTQ/SRR7889582.fastq.gz | grep -c @SRR7889
+>1505731
+zcat FASTQ/SRR7889581.fastq.gz | grep -c @SRR7889
+>18381890
+
+# To get the read length we could get the first read sequence from the second line of the file and count the characters
+# 'tail' is the opposite of 'head'
+zcat FASTQ/SRR7889581.fastq.gz | head -n 2 | tail -n 1 | wc -m
+
+2.3.1 
+
+# Done on the UCSC table browser
+
+2.3.2
+
+# "sort" reorders a file. The default is alphabetically by line.
+# '-k 10' - sort on 10th column
+# '-n ' sort numerically
+# '-r' sort reverse (high to low)
+sort -nr -k 10 dm6.Ensembl.genes.bed12 | head -n 5
+
+2.3.3
+
+# N.B. This should have read "CDS" not "gene", sorry
+
+# 'cut' allows us to cut out a particular column - the default is to assume that columns are separated by tabs
+cut -f 3 dm6.Ensembl.genes.gtf | grep CDS | wc -l
+>17737
+
+# An alternative method using the 'awk' programme
+awk '$3=="CDS"' dm6.Ensembl.genes.gtf | wc -l
+>17737
+
+3.1.1
+
+# Create directory
+mkdir QC
+# Run FASTQC
+fastqc -o QC -t 7 FASTQ/SRR7889585.fastq.gz
+
+4.1.1
+
+mkdir -p Genome/Index
+hisat2-build -p 7 Genome/dm6.fa Genome/Index/dm6
+
+# This should create 8 dm6.X.ht2 files
+
+4.2.1 
+
+hisat2 -x Genome/Index/dm6 -U FASTQ/SRR7889582.fastq.gz -p 7 > hisat2/SRR7889582.sam
+
+4.3.1
+
+samtools view -bH hisat2/SRR7889582.sam > hisat2/SRR7889582.bam
+
+4.4.1
+
+samtools sort hisat2/SRR7889582.bam > hisat2/SRR7889582.sorted.bam
+samtools index hisat2/SRR7889582.sorted.bam
+
+4.5.1
+
+featureCounts -a Gene_annotation/dm6.Ensembl.genes.gtf -o hisat2/SRR7889582.featuresCounts hisat2/SRR7889582.sorted.bam 
+
+4.5.2
+
+sort -nrk 7 hisat2/SRR7889582.featuresCounts | head -n 1
+> FBtr0081639	chr3R;chr3R	7086599;7087234	7086744;7088839	+;+	1752	4530
+
+
+
+
+
+
+
+
+
