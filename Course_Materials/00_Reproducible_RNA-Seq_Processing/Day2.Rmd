@@ -82,3 +82,6 @@ Run these steps by using:
 `snakemake extrend_refrence  --use-conda --cores 7`
 
 
+**Exercise 2.2.1**
+
+How many new transcripts did we get in our filtered GTF file? How many of them are intergenic?
