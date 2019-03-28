@@ -68,7 +68,7 @@ _Day 2_
 14:00 - 14:45 - [RNA-seq Pre-processing](html/02_Preprocessing_Data.nb.html) - Ashley Sawle  
 - [practical solutions](Course_Materials/solutions/02_Preprocessing_Data.Solutions.nb.html)
 
-14:45 - 17:30 - [Linear Model and Statistics for Differential Expression](slides/StatisticalModels-20190328) - Dominique-Laurent Couturier
+14:45 - 17:30 - [Linear Model and Statistics for Differential Expression](StatisticalModels-20190328.pdf) - Dominique-Laurent Couturier
  - [Statistical models practical sessions](Course_Materials/03-StatisticalModels.Rmd)
 - [Dataset](Course_Materials/data/03-microarrays.csv)
  
