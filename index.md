@@ -50,16 +50,16 @@ _Day 1_
 13:30 - 16:00 [Practical: Mapping reads to the genome and getting raw counts ](Course_Materials/00_Reproducible_RNA-Seq_Processing/Day1.nb.html)
 
 16:00 - 17:30 [Practical: Introduction to reporducible bioinformatics ](Course_Materials/00_Reproducible_RNA-Seq_Processing/Day1.nb.html)
-- [Solutions for Day 1 practical](Course_Materials/solutions/00_Reproducible_RNA-seq_Processing.txt)
+- [Solutions for Day 1 practical](Course_Materials/solutions/00_Reproducible_RNA-seq_Processing_Day1.txt)
 
 _Day 2_
 
-9:30 - 10:00 [Lecuture: Transcriptome assembly and alternative splicing analysis](slides/Day2_Lecture.pptx) - Guillermo Parada Gonzalez 
+9:30 - 10:00 [Practial: Connecting snakemake workflows ](Course_Materials/00_Reproducible_RNA-Seq_Processing/Day2.nb.html)
 
-10:00 - 11:15 [Practical: Guided transcriptome assembly using StringTie](slides/Day2_Lecture.pptx)
+10:00 - 11:15 [Practical: Guided transcriptome assembly using StringTie](Course_Materials/00_Reproducible_RNA-Seq_Processing/Day2.nb.html)
 
-11:15 - 12:30 [Practical: Alternative splicing analysis using Whippet ](slides/DAY_2.pdf)
-- [Solutions for Day 2 practical](slides/DAY2answers.txt)
+11:15 - 12:30 [Practical: Alternative splicing analysis using Whippet ](Course_Materials/00_Reproducible_RNA-Seq_Processing/Day2.nb.html)
+- [Solutions for Day 1 practical](Course_Materials/solutions/00_Reproducible_RNA-seq_Processing_Day2.txt)
 
 12:30 - 13:30 - Lunch
 
