@@ -25,3 +25,24 @@ SAMPLES = ["SRR7889581", "SRR7889582", "SRR7889583", "SRR7889584", "SRR7889585",
 Next, save a new workflow visualisation in a new file and compare with the one we obtained yesterday. (Please take a look a the command to visualize the steps that is at (5.1 section)[https://bioinformatics-core-shared-training.github.io/RNAseq_March_2019/Course_Materials/00_Reproducible_RNA-Seq_Processing/Day1.nb.html]). Can you see some differences? 
 
 *Note:* If you are interested to run this snakemake pipeline with your own samples, you can modify `SAMPLES` list and fill it with your own sample names. As long you place your own `.fastq.gz` files at `FASTQ\`, snakemake will be able to recognize your samples as input. If you want to work with a different species, you also need to modify `Snakefile` (and some files at `rules\`) to replace `Genome/dm6.fa` and  "Gene_annotation/dm6.Ensembl.genes.gtf" by your own genome and gene annotation files.
+
+
+# 2. Transcriptome Assembly:
+
+ ![](http://2.bp.blogspot.com/-J0eXeoo5Soc/TdV9n6rhvLI/AAAAAAAAuEk/hNfo7zq7oT4/s1600/Assembly.png)
+
+    In addition to quantifying gene expression, RNA-Seq data can be also used to annotate new transcripts. For this purpose, the algorithm tries to assemble the reads into scaffolds by finding common sequences among the reads. There are two main strategies to do this:
+* *De novo* transcriptome assembly: Which just take input the FASTQ files and it loads them into the RAM memory to a fast exploration of the possible solutions to assemble the reads as transcripts, therefore it requires large amounts of RAM memory. It is particularly useful when no good quality genome assembly is available. 
+* Genome-guided transcriptome assembly: Which process the genomic alignments (BAM files) to assemble the transcripts. It is usually much faster and produces better results when the genome assembly is of good quality, like the ones you can find for model organisms (like *D. melanogaster*)
+
+(you can just add delete the `#` from the first line and add one at the beginning of the second)
+
+**Exercise 2.1**
+
+`include: "rules/01_stringtie.skm"` connects our Snakefile with a module located at `rules/01_stringtie.skm`. Open this file and try to predict what commands are going to be executed by snakemake when we execute these rules. 
+
+# 2.1 Assembling reads into transcripts
+
+The rule `StringTie_Assemble` execute `stringtie` for each BAM file. This will produce `.assemble.gtf` files at a `StringTie\`. Then all of these gene assembly files will be merged by `StringTie_Merge` by executing `stringtie --merge` and save it at `StringTie/merged.assemble.gtf`.
+
+**Exercise 2.1.1**
