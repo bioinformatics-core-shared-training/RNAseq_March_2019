@@ -41,7 +41,7 @@ _Day 1_
 
 9:30 - 10:15 - [Introduction to RNAseq Methods](html/Introduction_to_RNAseq_Methods.html) - Ashley Sawle
 
-10:15 - 10:45 - [Introduction to Alignment and Quantification](slides/Day1_Lecture.pptx) - Guillermo Parada Gonzalez
+10:15 - 10:45 - [Introduction to Alignment and Quantification](slides/Lecture_2019_-_Guillermo_-_Day_1.pdf) - Guillermo Parada Gonzalez
 
 10:30 - 12:30 [Practical: Basic Unix, input file formats and quality control](Course_Materials/00_Reproducible_RNA-Seq_Processing/Day1.nb.html)
 
