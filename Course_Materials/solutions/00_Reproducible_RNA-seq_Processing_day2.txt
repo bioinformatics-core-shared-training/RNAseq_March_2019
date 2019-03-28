@@ -28,6 +28,8 @@ And use the coordinates of some unannotated transcripts to explore them at IGV
 
 2.2.1
 
+awk '$3=="transcript"' gffcompare.annotated.filtered.gtf |   wc -l
+>3497
 grep '"u"' gffcompare.annotated.filtered.gtf | wc -l
 >39
 
