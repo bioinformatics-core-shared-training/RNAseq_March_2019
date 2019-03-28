@@ -2,8 +2,7 @@
 
 
 ---
-title: "Statistical analysis of RNAseq data: 
-analysis of the *diet* dataset" 
+title: "Statistical analysis of RNAseq data" 
 author: "D.-L. Couturier"
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output:
