@@ -17,3 +17,17 @@ awk '$3=="transcript"' merged.assemble.gtf | wc -l
 
 awk '$4=="u"' gffcompare.tracking | wc -l
 >2083
+
+
+2.1.3
+
+Do
+grep '"u"' gffcompare.annotated.gtf | head
+And use the coordinates of some unannotated transcripts to explore them at IGV
+
+
+2.2.1
+
+grep '"u"' gffcompare.annotated.filtered.gtf | wc -l
+>39
+
