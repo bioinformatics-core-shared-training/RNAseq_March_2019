@@ -17,12 +17,13 @@ Use `Atom` (or any text editor) to open `rules/00_download_data.skm` file and ta
 
 # Exercise 1.1
 
-As we have already downloaded all the data, we can disconnect `rules/00_download_data.skm` module from our `Snakefile`. To do this *comment* the first include statement by adding a `#` character at the first include statement and then on the following line create the `SAMPLES` list with the accession values from `NCBI_accession_list.txt` introducing the following code at the second line of the `Snakefile`:
+As we have already downloaded all the data, we can disconnect `rules/00_download_data.skm` module from our `Snakefile`. To do this *comment* the first include statement by adding a `#` character at the first include statement, this will inactivate this line. Then on the second Snakefile's line , create a list named `SAMPLES` that contain the accession values from `NCBI_accession_list.txt`. You can do this by introducing the following code at the second line of the `Snakefile`:
 
 ```{python}
 SAMPLES = ["SRR7889581", "SRR7889582", "SRR7889583", "SRR7889584", "SRR7889585", "SRR7889597", "SRR7889598", "SRR7889599", "SRR7889600"]
 ``` 
-Next, save a new workflow visualisation in a new file and compare with the one we obtained yesterday. (Please take a look a the command to visualize the steps that is at (5.1 section)[https://bioinformatics-core-shared-training.github.io/RNAseq_March_2019/Course_Materials/00_Reproducible_RNA-Seq_Processing/Day1.nb.html]). Can you see some differences? 
+Next, save a new workflow visualisation in a new file and compare with the one we obtained yesterday. (Please take a look a the command to visualize the steps that is at (5.1 section)[https://bioinformatics-core-shared-training.github.io/RNAseq_March_2019/Course_Materials/00_Reproducible_RNA-Seq_Processing/Day1.nb.html]). Can you see some differences? Undo the canges before continue or just delete the `#` from the first line and add `#` at the beginning of the second) 
+
 
 *Note:* If you are interested to run this snakemake pipeline with your own samples, you can modify `SAMPLES` list and fill it with your own sample names. As long you place your own `.fastq.gz` files at `FASTQ\`, snakemake will be able to recognize your samples as input. If you want to work with a different species, you also need to modify `Snakefile` (and some files at `rules\`) to replace `Genome/dm6.fa` and  "Gene_annotation/dm6.Ensembl.genes.gtf" by your own genome and gene annotation files.
 
@@ -35,7 +36,6 @@ In addition to quantifying gene expression, RNA-Seq data can be also used to ann
 * *De novo* transcriptome assembly: Which just take input the FASTQ files and it loads them into the RAM memory to a fast exploration of the possible solutions to assemble the reads as transcripts, therefore it requires large amounts of RAM memory. It is particularly useful when no good quality genome assembly is available. 
 * Genome-guided transcriptome assembly: Which process the genomic alignments (BAM files) to assemble the transcripts. It is usually much faster and produces better results when the genome assembly is of good quality, like the ones you can find for model organisms (like *D. melanogaster*)
 
-(you can just add delete the `#` from the first line and add one at the beginning of the second)
 
 **Exercise 2.1**
 
@@ -43,7 +43,21 @@ In addition to quantifying gene expression, RNA-Seq data can be also used to ann
 
 # 2.1 Assembling reads into transcripts
 
-The rule `StringTie_Assemble` execute `stringtie` for each BAM file. This will produce `.assemble.gtf` files at a `StringTie\`. Then all of these gene assembly files will be merged by `StringTie_Merge` by executing `stringtie --merge` and save it at `StringTie/merged.assemble.gtf`.
+The rule `StringTie_Assemble` execute `stringtie` for each BAM file. This will produce `.assemble.gtf` files at a `StringTie\`. Then all of these gene assembly files will be merged by `StringTie_Merge` by executing `stringtie --merge` and save it at `StringTie/merged.assemble.gtf`. Finnally, `StringTie_gffcompare` we compare this merged assembly with the reference transcript annotation using `gffcompare`, this will allow us to identify novel transcripts that are not currently annotated at *D. melanogaster* transcriptome. 
+
+
+Visualize these steps by targeting this `StringTie_gffcompare ` rule and generate the DAG and transforming it to an image:
+
+`snakemake StringTie_gffcompare --dag | dot -Tpng > StringTie_Merge.png`
+
+Then look at the commands it will submit:
+
+`snakemake StringTie_gffcompare -np`
+
+Finally, run these steps:
+
+`snakemake StringTie_gffcompare --use-conda --cores 7`
+
 
 **Exercise 2.1.1**
 
@@ -55,7 +69,7 @@ Look at `gffcompare\` folder and open the `gffcompare.tracking` file. The third 
 
 **Exercise 2.1.3**
 
-Load gffcompare.annotated.gtf at `IGV` and visualize some examples of unnanotated trancripts. What do you think is the common characteristic? 
+Load gffcompare.annotated.gtf at `IGV` and visualize some examples of unnanotated trancripts. What do you think there is the common characteristic? 
 
 # 2.2 Filtering the assembly
 
