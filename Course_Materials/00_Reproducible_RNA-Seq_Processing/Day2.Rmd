@@ -31,7 +31,7 @@ Next, save a new workflow visualisation in a new file and compare with the one w
 
  ![](http://2.bp.blogspot.com/-J0eXeoo5Soc/TdV9n6rhvLI/AAAAAAAAuEk/hNfo7zq7oT4/s1600/Assembly.png)
 
-    In addition to quantifying gene expression, RNA-Seq data can be also used to annotate new transcripts. For this purpose, the algorithm tries to assemble the reads into scaffolds by finding common sequences among the reads. There are two main strategies to do this:
+In addition to quantifying gene expression, RNA-Seq data can be also used to annotate new transcripts. For this purpose, the algorithm tries to assemble the reads into scaffolds by finding common sequences among the reads. There are two main strategies to do this:
 * *De novo* transcriptome assembly: Which just take input the FASTQ files and it loads them into the RAM memory to a fast exploration of the possible solutions to assemble the reads as transcripts, therefore it requires large amounts of RAM memory. It is particularly useful when no good quality genome assembly is available. 
 * Genome-guided transcriptome assembly: Which process the genomic alignments (BAM files) to assemble the transcripts. It is usually much faster and produces better results when the genome assembly is of good quality, like the ones you can find for model organisms (like *D. melanogaster*)
 
