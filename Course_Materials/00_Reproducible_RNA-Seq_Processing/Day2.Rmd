@@ -3,4 +3,22 @@ title: " Reproducible RNA-seq Proceessing - Day2 "
 output: html_notebook
 ---
 
-We created additional w
+# 1. Connecting snakemake workflows  
+
+Yesterday we got a taste of the power of snakemake to conduct bioinformatics analyses. Today we are going to see how our `Snakefile` can be connected other downstream workflows modules. 
+
+The statement that allows integration of additional modules to our snakemake is `include`. Open the `Snakefile` you will see that at the very beginning there is an include statement that connects it with `rules/00_download_data.skm`, which correspond to a snakemake module that was run to download all the data from this course:
+
+```{python}
+include: "rules/00_download_data.skm"
+``` 
+
+Use `Atom` (or any text editor) to open `rules/00_download_data.skm` file and take a look its code. You will see that the code start with some python code and the is followed up by some snakemake rules. This is possible because of Snakemake uses python as a background, so any python syntax works. The first part of the code tries to create some folders (`FASTQ/`, `download/` and `logs/`). Then between lines 20-52, the scripts to download the samples are generated at `download/` folder. At the same time `SAMPLES` object is created, and stores all the accession codes from `NCBI_accession_list.txt`. Thus, after these lines, SAMPLES correspond to a standard (python list)[https://www.programiz.com/python-programming/list] with the accession codes inside.
+
+# Exercise 1.1
+
+As we have already downloaded all the data, we can disconnect `rules/00_download_data.skm` module from our `Snakefile`. To do this *comment* the first include statement by adding a `#` character at the first include statement and then on the following line create the `SAMPLES` list with the accession values from `NCBI_accession_list.txt` introducing the following code at the second line of the `Snakefile`:
+
+```{python}
+SAMPLES = ["SRR7889581", "SRR7889582", "SRR7889583", "SRR7889584", "SRR7889585", "SRR7889597", "SRR7889598", "SRR7889599", "SRR7889600"]
+``` 
