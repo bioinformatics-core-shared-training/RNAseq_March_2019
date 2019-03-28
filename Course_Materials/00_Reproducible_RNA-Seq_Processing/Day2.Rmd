@@ -99,3 +99,20 @@ Run these steps by using:
 **Exercise 2.2.1**
 
 How many new transcripts did we get in our filtered GTF file? How many of them are intergenic?
+
+
+# 3. Alternative splicing analysis
+
+To evaluate alternative splicing, we are going to use [Whippet](https://github.com/timbitz/Whippet.jl), a newly developed tool developed in [julia](https://julialang.org/). To do this, we need to activate a virtual environment that we already prepared for you:
+
+`conda activate julia_0.6.1`
+
+This virtual environment has a version of **julia** which is compatible with **Whippet**. To see more details about how we prepared this environment, please follow this [link](https://github.com/bioinformatics-core-shared-training/RNAseq_March_2019/tree/master/Course_Materials/00_Reproducible_RNA-Seq_Processing/Whippet).
+
+To visualize the stepts we are going to run we can plot the DAG using `whippet_delta` as a target:
+
+`snakemake whippet_delta --dag | dot -Tpng > whippet_delta.png`
+
+As this section might take a while, please run leave it running meanwhile we give you more details about Whippet:
+
+`snakemake whippet_delta --use-conda --cores 7`
