@@ -46,3 +46,39 @@ In addition to quantifying gene expression, RNA-Seq data can be also used to ann
 The rule `StringTie_Assemble` execute `stringtie` for each BAM file. This will produce `.assemble.gtf` files at a `StringTie\`. Then all of these gene assembly files will be merged by `StringTie_Merge` by executing `stringtie --merge` and save it at `StringTie/merged.assemble.gtf`.
 
 **Exercise 2.1.1**
+
+Count the number of transcripts that were produced with the BAM file from the smallest and the largest sample. Then compare these values with the total amount of transcripts that you obtained after merging all the samples (hint: use `awk '$3=="transcript"' GTF` to filter the lines of the GTF files that match with `transcript` on the third column).
+
+**Exercise 2.1.2**
+
+Look at `gffcompare\` folder and open the `gffcompare.tracking` file. The third line corresponds to a  **Transcript classification code**. Follow this [link](http://ccb.jhu.edu/software/stringtie/gffcompare.shtml#transfrag-class-codes) to interpret these codes and count the number of unknown intergenic transcripts that you assembled.
+
+**Exercise 2.1.3**
+
+Load gffcompare.annotated.gtf at `IGV` and visualize some examples of unnanotated trancripts. What do you think is the common characteristic? 
+
+# 2.2 Filtering the assembly
+
+As you may notice, many of the new transcripts that StringTie generated with our data correspond to transcripts that only have one exon. Many of these can be false positives, thus we have coded for you a script in python (`scripts/StringTie_filter.py`) can filter this obtained assemblyes by transcript classification code and a minimum number of exons. This script is executed by `StringTie_filer` that is at `rules/02_bridge.skm`:
+
+```{python}
+ rule StringTie_filer:
+    input:
+        gtf = "gffcompare/gffcompare.annotated.gtf",
+        tracking = "gffcompare/gffcompare.tracking"
+    params:
+        min_number_of_exons = 3,
+        gffcompare_allowed_classes = "k,m,n,j,x,i,y,u"
+    output:
+        gtf_filtered = "gffcompare/gffcompare.annotated.filtered.gtf"
+    shell:
+        "python scripts/StringTie_filter.py {input} {params} > {output}"
+``` 
+    
+Where `min_number_of_exons` parameter correspond to the minimum number of exons that we allow in our filtering process. Also, as certain transcript types might not be reliable,  `gffcompare_allowed_classes` parameter is a comma-separated list of the codes that we considered reliable and that it will be in our final filtered file. Finnaly, the next rule of `02_bridge.skm` module, merges the filtered list of new transcripts with the reference transcripts.
+
+Run these steps by using:
+
+`snakemake extrend_refrence  --use-conda --cores 7`
+
+
