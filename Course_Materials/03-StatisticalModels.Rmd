@@ -2,8 +2,7 @@
 
 
 ---
-title: "Statistical analysis of RNAseq data: 
-analysis of the *diet* dataset" 
+title: "Statistical analysis of RNAseq data" 
 author: "D.-L. Couturier"
 date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
 output:
@@ -27,11 +26,6 @@ output:
 setwd("~/courses/cruk/RNAseqWithR/201903/git_RNAseq_March_2019/Course_Materials/")
 
 ```
-
-
-A full version of the dataset *diet* may be found online on the U. of Sheffield website <https://www.sheffield.ac.uk/polopoly_fs/1.570199!/file/stcp-Rdataset-Diet.csv>. 
-
-A slightly modified version is available in the data file is stored under data/diet.csv. The data set contains information on 76 people who undertook one of three diets (referred to as diet _A_, _B_ and _C_). There is background information such as age, gender, and height. The aim of the study was to see which diet was best for losing weight.
 
 
 # Section 1: Analysis of gene expression measured with Microarrays 
@@ -133,6 +127,10 @@ Y = microarrays$expression
 X = model.matrix(~mousetype*celltype,data=microarrays)
 # estimate
 Beta.hat = solve(t(X)%*%X)%*%t(X)%*%Y
+# compare
+Beta.hat
+summary(lm(expression~mousetype*celltype,data=microarrays))
+
 ```
 
 For fun, simulate data with sigma = 2
@@ -143,6 +141,24 @@ Y  = X%*%Beta.hat + E
 # estimate
 summary(lm(Y~microarrays$mousetype*microarrays$celltype))
 ```
+
+
+## Section 2: LNO model
+
+```{r message = FALSE, warning = FALSE, echo = TRUE}
+# install or load gamlss package
+install.packages("gamlss")
+library(gamlss)
+# prepare 
+E  = rnorm(nrow(X),mean=0,sd=.25)
+Y  = exp(X%*%Beta.hat + E)
+microarrays$Y = Y
+# estimate
+?LOGNO
+summary(gamlss(Y~mousetype*celltype,data=microarrays,family="LOGNO"))
+summary(lm(log(Y)~microarrays$mousetype*microarrays$celltype))
+```
+
 
 
 # Section 3: Large Scale Hypothesis testing: FDR
