@@ -84,17 +84,13 @@ The function `plotGseaTable` allows us to plot a summary figue showing the
 results for multiple pathways.
 
 ```{r}
-topUp <- fgseaRes %>% 
-    filter(ES > 0) %>% 
-    top_n(10, wt=-padj)
-topDown <- fgseaRes %>% 
-    filter(ES < 0) %>% 
-    top_n(10, wt=-padj)
-topPathways <- bind_rows(topUp, topDown) %>% 
-    arrange(-ES)
+topPathways <- fgseaRes %>% 
+    top_n(20, wt=-padj) %>% 
+    arrange(-NES) %>% 
+    pull(pathway)
 
-plotGseaTable(pathwaysH[topPathways$pathway], 
-              ranks, 
+plotGseaTable(pathwaysH[topPathways], 
+              rankData, 
               fgseaRes, 
               gseaParam = 0.5)
 ```
